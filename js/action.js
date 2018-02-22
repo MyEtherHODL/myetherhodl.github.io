@@ -56,6 +56,7 @@ function compareBalance(hodlersA, hodlersB) {
   return hodlersB.balance - hodlersA.balance;
 }
 
+/*
 $('.modal__copy').click(function(){
 	var copy_from = $(this).attr("data-clipboard-target");
 	var copy_info = $(copy_from).html();
@@ -63,7 +64,7 @@ $('.modal__copy').click(function(){
 		copy_info = copy_info.split(' ETH')[0];
 
 	alert(copy_info);
-});
+});*/
 
 /* ------------ HOLD ------------ */
 $('.promo__btn').filter('.hold').click(function(){
