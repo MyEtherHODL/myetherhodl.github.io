@@ -1,0 +1,155 @@
+.results {
+  background-color: @black;
+
+  &__inner {
+    .container();
+    position: relative;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+
+    @media (min-width: 768px) {
+      padding-bottom: 40px;
+      padding-left: 15%;
+    }
+  }
+
+  &__title {
+    .title-text();
+    font-style: italic;
+    color: @white;
+  }
+  &__subtitle {
+    .btn-text();
+    font-style: italic;
+    margin-bottom: 40px;
+    .text-lowercase();
+    color: @white;
+  }
+
+  &__list {
+    font-style: italic;
+    position: relative;
+    width: ~'calc(100% - 20px)';
+    height: 290px;
+    margin-bottom: 40px;
+    padding: 0 15px;
+    border: 2px solid @white;
+    background-color: @black;
+
+    @media (min-width: 768px) {
+      width: 100%;
+      height: 382px;
+      margin-bottom: 0;
+    }
+
+    &:before,
+    &:after {
+      position: absolute;
+      right: 0;
+      display: inline-block;
+      width: 30px;
+      height: 15px;
+      content: '';
+      background-color: @black;
+    }
+
+    &:before {
+      top: 0;
+    }
+
+    &:after {
+      bottom: 0;
+    }
+  }
+
+  &__list-inner {
+    overflow: auto;
+    height: 100%;
+    padding: 15px 0;
+
+    &::-webkit-scrollbar-track {background: @black;}
+    &::-webkit-scrollbar {width: 5px;}
+    &::-webkit-scrollbar-thumb {background: @white;}
+    &:hover::-webkit-scrollbar-thumb {background: @white;}
+
+    @media (min-width: 768px) {
+      &::-webkit-scrollbar {width: 10px;}
+    }
+  }
+
+  &__top {
+    margin-bottom: 30px;
+  }
+
+  &__top-title {
+    font-style: italic;
+    margin-bottom: 10px;
+    .text-uppercase();
+    color: @white;
+  }
+
+  &__top-item {
+    .btn-text();
+    font-style: italic;
+    overflow: hidden;
+    width: 100%;
+    padding-right: 11px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: @gray;
+
+    @media (min-width: 768px) {
+      padding-right: 34px;
+    }
+  }
+
+  &__top-count {
+    margin-right: 8px;
+    color: @white;
+
+    &.increase {
+      color: @green;
+    }
+    &.decrease {
+      color: @red;
+    }
+  }
+
+  &__logo {
+    font-size: 9px;
+    line-height: 11px;
+    font-style: italic;
+    position: relative;
+    width: 59px;
+    padding-left: 24px;
+    color: @white;
+
+    @media (min-width: 768px) {
+      .small-text();
+      letter-spacing: .38px;
+      position: absolute;
+      bottom: 40px;
+      left: 15px;
+    }
+
+    &:before {
+      position: absolute;
+      top: 2px;
+      left: 0;
+      display: inline-block;
+      width: 15px;
+      height: 30px;
+      content: '';
+      background-image: url('../img/logo-blue.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+
+      @media (min-width: 768px) {
+        top: 0;
+        width: 21px;
+        height: 40px;
+      }
+    }
+  }
+}

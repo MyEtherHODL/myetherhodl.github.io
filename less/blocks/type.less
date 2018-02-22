@@ -1,0 +1,78 @@
+// Transformation
+.text-lowercase()      { text-transform: lowercase; }
+.text-uppercase()      { text-transform: uppercase; }
+.text-capitalize()     { text-transform: capitalize; }
+
+.base-text() {
+  font-size: @font-size--base-xs;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;;
+  font-weight: 800;
+  line-height: @line-height--base-xs;
+
+  @media (min-width: 768px) {
+    font-size: @font-size--base;
+    line-height: @line-height--base;
+  }
+}
+
+.small-text() {
+  font-size: @font-size--small-xs;
+  line-height: @line-height--small-xs;
+  letter-spacing: .58px;
+
+  @media (min-width: 768px) {
+    font-size: @font-size--small;
+    line-height: @line-height--small;
+    letter-spacing: .48px;
+  }
+}
+
+.large-text() {
+  font-size: @font-size--large-xs;
+  line-height: @line-height--large-xs;
+
+  @media (min-width: 768px) {
+    font-size: @font-size--large;
+    line-height: @line-height--large;
+  }
+}
+
+.larger-text() {
+  font-size: @font-size--larger-xs;
+  line-height: @line-height--larger-xs;
+
+  @media (min-width: 768px) {
+    font-size: @font-size--larger;
+    line-height: @line-height--larger;
+  }
+}
+
+.largest-text() {
+  font-size: @font-size--largest-xs;
+  line-height: @line-height--largest-xs;
+
+  @media (min-width: 768px) {
+    font-size: @font-size--largest;
+    line-height: @line-height--largest;
+  }
+}
+
+.title-text() {
+  font-size: @font-size--title-xs;
+  line-height: @line-height--title-xs;
+
+  @media (min-width: 768px) {
+    font-size: @font-size--title;
+    line-height: @line-height--title;
+  }
+}
+
+.btn-text() {
+  font-size: @font-size--btn-xs;
+  line-height: @line-height--btn-xs;
+
+  @media (min-width: 768px) {
+    font-size: @font-size--btn;
+    line-height: @line-height--btn;
+  }
+}

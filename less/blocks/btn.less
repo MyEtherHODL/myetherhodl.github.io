@@ -1,0 +1,71 @@
+.btn() {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 46px;
+  position: relative;
+  display: inline-block;
+  height: 50px;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  touch-action: manipulation;
+  &:before {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: ~"calc(100% + 4px)";
+    height: ~"calc(100% + 4px)";
+    display: inline-block;
+    content: '';
+  }
+  &:after {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    display: inline-block;
+    width: ~"calc(100% + 10px)";
+    height: ~"calc(100% + 10px)";
+    content: '';
+  }
+  &:active {
+    &:before {
+      top: -2px;
+      left: -2px;
+    }
+  }
+  @media (min-width: 768px) {
+    font-size: 30px;
+    line-height: 56px;
+    height: 60px;
+
+    &:hover {
+      &:before {
+        top: -2px;
+        left: -2px;
+      }
+    }
+  }
+}
+
+.btn-blue() {
+  .btn();
+  border: 2px solid @black;
+  background-color: @white;
+  &:before {
+    color: @white;
+    border: 2px solid @black;
+    background-color: @blue;
+  }
+}
+
+.btn-white() {
+  .btn();
+  .text-uppercase();
+  border: 2px solid @white;
+  background-color: @black;
+  &:before {
+    content: 'FAQ';
+    color: @black;
+    background-color: @white;
+  }
+}

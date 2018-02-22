@@ -1,0 +1,40 @@
+.page-footer {
+  background-color: @black;
+
+  &__inner {
+    .container();
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 20px;
+
+    @media (min-width: 768px) {
+      padding-top: 20px;
+    }
+  }
+
+  &__copyrights,
+  &__help {
+    .small-text();
+    font-weight: 400;
+    display: block;
+    color: @gray-light;
+
+    @media (min-width: 768px) {
+      display: inline-block;
+    }
+  }
+
+  &__copyrights {
+    margin-right: 27px;
+    vertical-align: top;
+  }
+
+  &__help {
+    margin-top: 10px;
+
+    @media (min-width: 1024px) {
+      float: right;
+      margin-top: 0;
+    }
+  }
+}

@@ -1,0 +1,90 @@
+* {
+  box-sizing: border-box;
+}
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+// Body reset
+
+html {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  height: 100%;
+}
+
+html, body, h1, h2, h3, h4, h5, h6, p, ul, blockquote, li {
+  padding: 0;
+  margin: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+body {
+  .base-text();
+  background-color: @black;
+
+  &.overlay {
+    position: fixed;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      position: initial;
+      overflow: hidden;
+    }
+  }
+}
+
+.link() {
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  color: @text-color;
+}
+
+a {
+  .link();
+}
+
+input, textarea, button {
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+  border-radius: 0;
+  // user-select: none;
+  padding: 0;
+}
+
+::selection {
+  background: @blue; /* Safari, Chrome, Opera */
+}
+::-moz-selection {
+  background: @blue; /* FireFox */
+}
+::-webkit-selection {
+  background: @blue;
+}
+
+.container() {
+  width: 100%;
+  padding-right: 20px;
+  padding-left: 20px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (min-width: 576px) {
+    max-width: 540px;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 720px;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 970px;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}

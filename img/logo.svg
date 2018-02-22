@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="79px" viewBox="0 0 40 79" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 10</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M36,35.5 L18,71 L0,35.5 L18,0 L36,35.5 Z" id="path-1"></path>
+    </defs>
+    <g id="FINAL_FINAL" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-42.000000, -30.000000)">
+        <g id="1">
+            <g id="logo" transform="translate(42.000000, 30.000000)">
+                <g id="Group-10">
+                    <g id="Combined-Shape-Copy-4">
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        <path stroke="#000000" stroke-width="2" d="M34.8787989,35.5 L18,2.21125767 L1.12120107,35.5 L18,68.7887423 L34.8787989,35.5 Z"></path>
+                    </g>
+                    <path d="M40,43.5 L22,79 L4,43.5 L22,8 L40,43.5 Z" id="Combined-Shape-Copy-3" fill="#2B5FF4"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
