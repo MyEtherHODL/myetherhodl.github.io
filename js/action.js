@@ -66,7 +66,7 @@ function fill_last_and_top_txs(){
 			year_text += "s";
 		var tooltip	= "eth will be returned</br>in "+hodlers[i].term+" "+year_text+" ("+hodlers[i].date_return+")";
 
-		$('.results__latest').append('<div class="results__top-item"><span class="results__top-count increase" data-tooltip="'+tooltip+'">'+hodlers[i].balance+' Eth</span> <span>'+hodlers[i].address+'</span></div>');
+		$('.results__latest').append('<div class="results__top-item"><span class="results__top-count increase" data-tooltip="'+tooltip+'">'+hodlers[i].balance+' Eth</span> <span class="addr__link">'+hodlers[i].address+'</span></div>');
 		
 	}
 	for(var i = 0; i < COUNT_TOP_HOLDERS, i < hodlers.sort(compareBalance).length; i++){
@@ -75,7 +75,7 @@ function fill_last_and_top_txs(){
 			year_text += "s";
 		var tooltip	= "eth will be returned</br>in "+hodlers[i].term+" "+year_text+" ("+hodlers[i].date_return+")";
 
-		$('.results__top').append('<div class="results__top-item"><span class="results__top-count" data-tooltip="'+tooltip+'">'+hodlers[i].balance+' Eth</span> <span>'+hodlers[i].address+'</span></div>');
+		$('.results__top').append('<div class="results__top-item"><span class="results__top-count" data-tooltip="'+tooltip+'">'+hodlers[i].balance+' Eth</span> <span class="addr__link">'+hodlers[i].address+'</span></div>');
 	}
 }
 function compareBalance(hodlersA, hodlersB) {
