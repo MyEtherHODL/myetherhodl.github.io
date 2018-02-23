@@ -135,7 +135,7 @@ $('.promo__btn').filter('.withdraw').click(function(){
 function withdraw_button(hodler){
 	update_hodler_info(hodler);
 	
-	$('#withdraw_address').mask("******************************************");
+	$('#withdraw_address').mask("******************************************", { placeholder: " " });
 	$('#withdraw_address').on('change', function(){
 		var hodler = get_hodler_info($(this).val());
 		update_hodler_info(hodler);
@@ -202,7 +202,7 @@ function getDateTime(timestamp) {
 
 /* ------------ CHECK MY BALANCE ------------ */ /* ------------ SEND MORE ------------ */ 
 $('.descr__link').filter('.check-balance-btn').click(function(){
-	$('#check_withdraw_address').mask("******************************************");	
+	$('#check_withdraw_address').mask("******************************************", { placeholder: " " });	
 	$('#check_withdraw_address').on('change', function(){
 		var hodler = get_hodler_info($(this).val());
 		update_hodler_info(hodler);
