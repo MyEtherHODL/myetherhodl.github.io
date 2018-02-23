@@ -30,7 +30,7 @@ fill_last_and_top_txs();
 
 $('.results__top-item :nth-child(2)').click(function(){
 	window.open("https://etherscan.io/address/"+$(this).html(), '_blank');
-});
+});//https://ropsten.etherscan.io/tx/0x7972a3efc8a6c20dddde5c32e9571e3e5bc3f16baaa2e7b8825c795439a221f5
 
 $('.ticker__link').click(function(){
 	window.open("https://etherscan.io/address/"+$('#ticker_address').html(), '_blank');
