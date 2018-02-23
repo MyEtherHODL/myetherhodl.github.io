@@ -147,7 +147,7 @@ function withdraw_button(hodler){
 	});
 
 	$('#withdraw_data').html('').append( get_kessak256_data('party()') );
-	$('#contract_address').html('').append( CONTRACT_ADDRESS );
+	$('#withdraw_contract_address').html('').append( CONTRACT_ADDRESS );
 	$('[name="withdraw_wallet_type"]').on('change', function(){
 		if($(this).attr('id').split('withdraw_')[1] != WALLETS[2])
 			check_wallet($(this).attr('id').split('withdraw_')[1]);
