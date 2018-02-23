@@ -27,30 +27,50 @@ if(!web3.net.listening){
 }
 
 fill_last_and_top_txs();
+
+$('.results__top-item :nth-child(2)').click(function(){
+	window.open("https://etherscan.io/address/"+$(this).html(), '_blank');
+});
+
+$('.ticker__link').click(function(){
+	window.open("https://etherscan.io/address/"+$('#ticker_address').html(), '_blank');
+});
+
+
 function fill_last_and_top_txs(){
  	var hodlers = [];
 	var already_hold = 0;
-	var lastweek_hold = 0;
+	var biggest_hodler_week = {'balance': 0, 'address': CONTRACT_ADDRESS};
 	for(var i = 0; i < web3.eth.contract(ABI).at(CONTRACT_ADDRESS).hodlersCount(); i++){
 		var address = web3.eth.contract(ABI).at(CONTRACT_ADDRESS).hodlers(i);
 		var hodler = get_hodler_info(address);
 		already_hold += hodler.balance;
-		hodlers.push({ 'address': address, 'balance': hodler.balance, 'date_start_holding': hodler.date_start_holding });
-
+		hodlers.push({ 'address': address, 'balance': hodler.balance, 'date_start_holding': hodler.date_start_holding, 'term': hodler.term, 'date_return': hodler.date_return });
+		
 		var date_arr = hodler.date_start_holding.split('/');
 		var curret_unixtime = parseInt(new Date().getTime()/1000);
 		var hodler_unixtime = parseInt(new Date(parseInt(date_arr[2]),parseInt(date_arr[1])-1,parseInt(date_arr[0])).getTime()/1000);
-		if( curret_unixtime - hodler_unixtime < 8*24*60*60 )
-			lastweek_hold += hodler.balance;
+		if( curret_unixtime - hodler_unixtime < 8*24*60*60 && 
+			biggest_hodler_week.balance < hodler.balance){
+			biggest_hodler_week = {'balance': hodler.balance, 'address': address };
+		}
 	}
 
-	$('.ticker__link').html('').append(lastweek_hold + " eth"); 
+	$('.ticker__link').html('').append(biggest_hodler_week.balance + " eth"); 
+	$('#ticker_address').html('').append(biggest_hodler_week.address);
 	$('.results__top > .results__top-title').html('').append('Top '+COUNT_TOP_HOLDERS+' holders');
 	$('.results__title').html('').append(already_hold + " eth");
-	for(var i = hodlers.length-1; i > hodlers.length-1 - COUNT_LATEST_HOLDERS, i >= 0; i--)
-		$('.results__latest').append('<div class="results__top-item"><span class="results__top-count increase">'+hodlers[i].balance+' Eth</span> <span>'+hodlers[i].address+'</span></div>');
-	for(var i = 0; i < COUNT_TOP_HOLDERS, i < hodlers.sort(compareBalance).length; i++)
-		$('.results__top').append('<div class="results__top-item"><span class="results__top-count">'+hodlers[i].balance+' Eth</span> <span>'+hodlers[i].address+'</span></div>');
+	for(var i = hodlers.length-1; i > hodlers.length-1 - COUNT_LATEST_HOLDERS, i >= 0; i--){
+		var year_text = "year";
+		if( hodlers[i].term > 1)
+			year_text += "s";
+		var tooltip	= "eth will be returned</br>in "+hodlers[i].term+" "+year_text+" ("+hodlers[i].date_return+")";
+
+		$('.results__latest').append('<div class="results__top-item"><span class="results__top-count increase" data-tooltip="'+tooltip+'">'+hodlers[i].balance+' Eth</span> <span>'+hodlers[i].address+'</span></div>');
+		
+	}
+	//for(var i = 0; i < COUNT_TOP_HOLDERS, i < hodlers.sort(compareBalance).length; i++)
+		//$('.results__top').append('<div class="results__top-item"><span class="results__top-count" data-tooltip="'+tooltip+'">'+hodlers[i].balance+' Eth</span> <span>'+hodlers[i].address+'</span></div>');
 }
 function compareBalance(hodlersA, hodlersB) {
   return hodlersB.balance - hodlersA.balance;

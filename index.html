@@ -9,6 +9,7 @@
   <link rel="stylesheet" type="text/css" href="css/liMarquee.css">
 </head>
 <body>
+  <div id="tooltip"></div>
   <main>
     <div class="promo">
       <div class="promo__inner">
@@ -44,23 +45,24 @@
     </div>
     <div class="ticker">
       <div class="ticker__inner">
+        <span id="ticker_address" hidden></span>
         <span class="ticker__text">The biggest lock this week</span>
-        <a class="ticker__link">120 Eth</a>
-        <span class="ticker__text">The biggest lock this week</span>
-        <span class="ticker__logo"></span>
-        <span class="ticker__text">The biggest lock this week</span>
-        <a class="ticker__link">120 Eth</a>
+        <a class="ticker__link"></a>
         <span class="ticker__text">The biggest lock this week</span>
         <span class="ticker__logo"></span>
         <span class="ticker__text">The biggest lock this week</span>
-        <a class="ticker__link">120 Eth</a>
+        <a class="ticker__link"></a>
+        <span class="ticker__text">The biggest lock this week</span>
+        <span class="ticker__logo"></span>
+        <span class="ticker__text">The biggest lock this week</span>
+        <a class="ticker__link"></a>
         <span class="ticker__text">The biggest lock this week</span>
         <span class="ticker__logo"></span>
       </div>
     </div>
     <div class="results">
       <div class="results__inner">
-        <p class="results__title">54.3 eth</p>
+        <p class="results__title"></p>
         <p class="results__subtitle">Already hold</p>
         <div class="results__list">
           <div class="results__list-inner">
@@ -340,6 +342,7 @@
   <script type="text/javascript" src="./js/lib/web3.min.js"></script>
   <script type="text/javascript" src="./js/lib/jquery.maskedinput.min.js"></script>
   <script type="text/javascript" src="./js/main.js"></script>
+  <script type="text/javascript" src="./js/tooltip.js"></script>
   <script type="text/javascript" src="./js/action.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
