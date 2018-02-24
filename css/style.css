@@ -839,6 +839,10 @@ button {
   text-overflow: ellipsis;
   color: #424242;
 }
+.results__top-item:before {
+  content: '';
+  display: block;
+}
 .results__top-item:hover {
   color: #888888;
 }
