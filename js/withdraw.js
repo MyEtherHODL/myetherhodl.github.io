@@ -36,15 +36,6 @@ $('[name="withdraw_wallet_type"]').on('change', function(){
 	}
 });
 
-function get_hodler_info(address){
-	var balance = web3.eth.contract(ABI).at(CONTRACT_ADDRESS).balanceOf(address) / Math.pow(10,18);
-	var term = web3.eth.contract(ABI).at(CONTRACT_ADDRESS).lockedFor(address);
-	var date_return = web3.eth.contract(ABI).at(CONTRACT_ADDRESS).lockedUntil(address);
-	var date_start_holding = date_return - term;
-	var date_now = ~~ (new Date().getTime() / 1000);
-	return {'balance': balance, 'term': term/60/60/24/365, 'date_start_holding': getDateTime(date_start_holding), 'date_return': getDateTime(date_return), 'days_left': ~~ ((date_return - date_now)/60/60/24)};
-}
-
 function update_hodler_info(hodler){
 	var balance = '-- ETH';
 	var term = '-- year';
@@ -68,16 +59,4 @@ function update_hodler_info(hodler){
 	$('.modal__details-period > .modal__details-val:nth-child(2)').html('').append(date_start_holding);
 	$('.modal__details-period > .modal__details-val:nth-child(4)').html('').append(date_return);
 	$('.modal__details-days').html('').append(days_left);
-}
-
-function getDateTime(timestamp) {
-	var date = new Date();
-	if(timestamp != undefined)
-		date = new Date(timestamp*1000);
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    month = (month < 10 ? "0" : "") + month;
-    var day  = date.getDate();
-    day = (day < 10 ? "0" : "") + day;
-    return day + "/" + month + "/" + year;
 }
