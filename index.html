@@ -129,11 +129,11 @@
           <div class="modal__radio type">
             <div class="modal__radio-title">Type of wallet</div>
             <div class="modal__radio-group">
-              <input type="radio" id="wallet_ledger" name="wallet_type" class="modal__radio-input" value="lodger" checked/>
+              <input type="radio" id="wallet_ledger" name="wallet_type" class="modal__radio-input" value="ledger" checked/>
               <label for="wallet_ledger" class="modal__radio-label">Ledger</label>
             </div>
             <div class="modal__radio-group">
-              <input type="radio" id="wallet_mist" name="wallet_type" class="modal__radio-input" value="mist"/>
+              <input type="radio" id="wallet_mist" name="wallet_type" class="modal__radio-input" value="metamask / mist"/>
               <label for="wallet_mist" class="modal__radio-label">MetaMask/Mist</label>
             </div>
             <div class="modal__radio-group">
@@ -159,7 +159,7 @@
               <div class="modal__hint">Your eth will be returned in 3 years <span></span></div>
             </div>
           </div>
-          <div class="modal__warning">Please login into your metamask/mist</div>
+          <div class="modal__warning">Please login into your metamask / mist</div>
           <div class="modal__account none">
             <div class="modal__field">
               <label class="modal__field-label" for="eth_amount">How many ETH?</label>
@@ -188,7 +188,7 @@
         </form>
         <div class="modal__status none">
           <span class="modal__status-str">Pending:</span>
-          <span>0x7cb57b5a97eabe94205c07890be4c1ad31e486a8</span>
+          <span>0x0000000000000000000000000000000000000000</span>
         </div>
       </div>
     </div>
@@ -206,9 +206,25 @@
             <input type="text" id="eth_amount" class="modal__field-input" placeholder="Copy and paste your address" />
           </div>
           <button class="modal__btn check-btn"></button>
-          <div class="modal__field-note warning">Or login into your metamask / mist / ledger wallet</div>
+          <div class="modal__warning">Or login into your metamask / mist / ledger wallet</div>
         </form>
         <div class="modal__account none">
+          <div class="modal__radio type">
+            <div class="modal__radio-title">Type of wallet</div>
+            <div class="modal__radio-group">
+              <input type="radio" id="withdraw_wallet_ledger" name="withdraw_wallet_type" class="modal__radio-input" value="ledger"/>
+              <label for="withdraw_wallet_ledger" class="modal__radio-label">Ledger</label>
+            </div>
+            <div class="modal__radio-group">
+              <input type="radio" id="withdraw_wallet_mist" name="withdraw_wallet_type" class="modal__radio-input" value="metamask / mist"/>
+              <label for="withdraw_wallet_mist" class="modal__radio-label">MetaMask/Mist</label>
+            </div>
+            <div class="modal__radio-group">
+              <input type="radio" id="withdraw_wallet_manually" name="withdraw_wallet_type" class="modal__radio-input" value="manually" checked/>
+              <label for="withdraw_wallet_manually" class="modal__radio-label">Manually</label>
+            </div>
+          </div>
+          
           <div class="modal__field">
             <div class="modal__field-label">Your wallet address</div>
               <input type="text" id="withdraw_address" class="modal__field-input" placeholder="Copy and paste your address" />
@@ -228,21 +244,6 @@
             </div>
           </div>
           <div class="modal__fee">You will be charged a <span>10% fee</span>. Maybe you change your mind and return to the game?</div>
-          <div class="modal__radio type">
-            <div class="modal__radio-title">Type of wallet</div>
-            <div class="modal__radio-group">
-              <input type="radio" id="withdraw_wallet_ledger" name="withdraw_wallet_type" class="modal__radio-input" value="lodger"/>
-              <label for="withdraw_wallet_ledger" class="modal__radio-label">Ledger</label>
-            </div>
-            <div class="modal__radio-group">
-              <input type="radio" id="withdraw_wallet_mist" name="withdraw_wallet_type" class="modal__radio-input" value="mist"/>
-              <label for="withdraw_wallet_mist" class="modal__radio-label">MetaMask/Mist</label>
-            </div>
-            <div class="modal__radio-group">
-              <input type="radio" id="withdraw_wallet_manually" name="withdraw_wallet_type" class="modal__radio-input" value="manually" checked/>
-              <label for="withdraw_wallet_manually" class="modal__radio-label">Manually</label>
-            </div>
-          </div>
           <div class="modal__manually">
             <div class="modal__field">
               <div class="modal__field-label">Amount</div>
@@ -270,7 +271,7 @@
             </div>
           </div>
           <div class="modal__mist none">
-            <div class="modal__field-note">Please login into your metamask / mist</div>
+            <div class="modal__warning">Please login into your metamask / mist</div>
           </div>
         </div>
       </div>
@@ -294,13 +295,33 @@
           <div class="modal__close"></div>
         </div>
         <div class="modal__title">Check my balance</div>
-        <form action="" class="modal__form">
-          <div class="modal__field">
-            <label class="modal__field-label" for="check_address">Your wallet address</label>
-            <input type="text" id="check_address" class="modal__field-input" placeholder="Copy and paste your address" />
+        <div class="modal__radio type">
+          <div class="modal__radio-title">Type of wallet</div>
+          <div class="modal__radio-group">
+            <input type="radio" id="check_wallet_ledger" name="check_wallet_type" class="modal__radio-input" value="ledger"/>
+            <label for="check_wallet_ledger" class="modal__radio-label">Ledger</label>
           </div>
-          <button class="modal__btn check-bal-btn"></button>
-          <div class="modal__field-note warning">Or login into your metamask / mist / ledger wallet</div>
+          <div class="modal__radio-group">
+            <input type="radio" id="check_wallet_mist" name="check_wallet_type" class="modal__radio-input" value="metamask / mist"/>
+            <label for="check_wallet_mist" class="modal__radio-label">MetaMask/Mist</label>
+          </div>
+          <div class="modal__radio-group">
+            <input type="radio" id="check_wallet_manually" name="check_wallet_type" class="modal__radio-input" value="manually" checked/>
+            <label for="check_wallet_manually" class="modal__radio-label">Manually</label>
+          </div>
+        </div>
+
+        <form action="" class="modal__form">
+          <div class="modal__manually">
+            <div class="modal__field">
+              <label class="modal__field-label" for="check_address">Your wallet address</label>
+              <input type="text" id="check_address" class="modal__field-input" placeholder="Copy and paste your address" />
+            </div>
+            <button class="modal__btn check-bal-btn"></button>
+          </div>
+          <div class="modal__mist none">
+            <div class="modal__warning">Please login into your metamask / mist</div>
+          </div>
         </form>
         <div class="modal__account none">
           <div class="modal__field">
@@ -344,6 +365,9 @@
   <script type="text/javascript" src="./js/main.js"></script>
   <script type="text/javascript" src="./js/tooltip.js"></script>
   <script type="text/javascript" src="./js/action.js"></script>
+  <script type="text/javascript" src="./js/hold.js"></script>
+  <script type="text/javascript" src="./js/withdraw.js"></script>
+  <script type="text/javascript" src="./js/check_balance.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
       $('.ticker__inner').liMarquee({

@@ -34,11 +34,10 @@
     document.querySelector('.check-balance-btn').addEventListener('click', function (e) {
       document.querySelector('.modal-wrap.check').classList.add('show');
       showPopup();
-
-      e.preventDefault();
-      document.querySelector('.check .modal__form').classList.add('none');
-      document.querySelector('.check .modal__account').classList.remove('none');
-      document.querySelector('.modal-wrap.check').classList.remove('auto-height');
+      
+      document.querySelector('.check .modal__form').classList.remove('none');
+      document.querySelector('.check .modal__account').classList.add('none');
+      document.querySelector('.modal-wrap.check').classList.add('auto-height');
     });
 
     document.querySelector('.promo__btn.hold').addEventListener('click', function(e) {
@@ -52,6 +51,7 @@
     document.querySelector('.promo__btn.withdraw').addEventListener('click', function(e) {
       document.querySelector('.modal-wrap.withdraw').classList.add('show');
       showPopup();
+      
       e.preventDefault();
       document.querySelector('.withdraw .modal__form').classList.add('none');
       document.querySelector('.withdraw .modal__account').classList.remove('none');
@@ -84,33 +84,30 @@
       }, 2000);
     });
 
-    /*document.querySelector('.check-btn').addEventListener('click', function (e) {
+    document.querySelector('.check-btn').addEventListener('click', function (e) {
       e.preventDefault();
       document.querySelector('.withdraw .modal__form').classList.add('none');
       document.querySelector('.withdraw .modal__account').classList.remove('none');
       document.querySelector('.modal-wrap.withdraw').classList.remove('auto-height');
-    });*/
+    });
 
     document.querySelector('.check-bal-btn').addEventListener('click', function (e) {
       e.preventDefault();
-      document.querySelector('.check .modal__form').classList.add('none');
-      document.querySelector('.check .modal__account').classList.remove('none');
-      document.querySelector('.modal-wrap.check').classList.remove('auto-height');
+      if($('#check_address').val().length == 42){
+        document.querySelector('.check .modal__form').classList.add('none');
+        document.querySelector('.check .modal__account').classList.remove('none');
+        document.querySelector('.modal-wrap.check').classList.remove('auto-height');
+      }
     });
 
     document.querySelectorAll('[name="wallet_type"]').forEach(function(item, i, arr) {
       item.addEventListener('change', function (e) {
-        if (item.value == 'lodger') {
+        if (item.value == 'ledger' || item.value == 'metamask / mist') {
           warningField.classList.remove('none');
           accountField.classList.add('none');
           manuallyField.classList.add('none');
           status.classList.add('none');
           status.classList.remove('success');
-        } else if (item.value == 'mist') {
-          warningField.classList.add('none');
-          accountField.classList.remove('none');
-          manuallyField.classList.add('none');
-          document.querySelector('.modal-wrap.send').classList.remove('auto-height');
         } else {
           warningField.classList.add('none');
           accountField.classList.add('none');
@@ -124,12 +121,24 @@
 
     document.querySelectorAll('[name="withdraw_wallet_type"]').forEach(function(item, i, arr) {
       item.addEventListener('change', function (e) {
-        if (item.value == 'lodger' || item.value == 'mist') {
+        if (item.value == 'ledger' || item.value == 'metamask / mist') {
           document.querySelector('.withdraw .modal__mist').classList.remove('none');
           document.querySelector('.withdraw .modal__manually').classList.add('none');
         } else {
           document.querySelector('.withdraw .modal__mist').classList.add('none');
           document.querySelector('.withdraw .modal__manually').classList.remove('none');
+        }
+      });
+    });
+
+    document.querySelectorAll('[name="check_wallet_type"]').forEach(function(item, i, arr) {
+      item.addEventListener('change', function (e) {
+        if (item.value == 'ledger' || item.value == 'metamask / mist') {
+          document.querySelector('.check .modal__mist').classList.remove('none');
+          document.querySelector('.check .modal__manually').classList.add('none');
+        } else {
+          document.querySelector('.check .modal__mist').classList.add('none');
+          document.querySelector('.check .modal__manually').classList.remove('none');
         }
       });
     });

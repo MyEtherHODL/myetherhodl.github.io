@@ -1078,7 +1078,7 @@ button {
     overflow: initial;
   }
 }
-.modal-wrap.check .modal__field-note.warning {
+.modal-wrap.check .modal__warning {
   margin-top: 22px;
 }
 @media (max-width: 767px) {
