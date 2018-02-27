@@ -13,11 +13,29 @@ $('.promo__btn').filter('.withdraw').click(function(){
 	$('#withdraw_data').html('').append( get_kessak256_data('party()') );
 	$('#withdraw_contract_address').html('').append( CONTRACT_ADDRESS );
 	update_hodler_info();
+
+	$('.withdraw .modal__details').hide();
+	$('.withdraw .modal__fee').hide();
+	$('.withdraw .modal__manually').hide();
+	$('.withdraw .modal').css('height', '350');
 });
 
 $('#withdraw_address').on('change', function(){
-	var hodler = get_hodler_info($(this).val());
-	update_hodler_info(hodler);
+	if($('#withdraw_address').val().length == 0){
+		$('.withdraw .modal').css('height', '350');
+
+		$('.withdraw .modal__details').hide();
+		$('.withdraw .modal__fee').hide();
+		$('.withdraw .modal__manually').hide();
+	} else {
+		$('.withdraw .modal').css('height', '600');
+
+		var hodler = get_hodler_info($(this).val());
+		update_hodler_info(hodler);
+		$('.withdraw .modal__details').show();
+		$('.withdraw .modal__fee').show();
+		$('.withdraw .modal__manually').show();
+	}
 });
 
 $('[name="withdraw_wallet_type"]').on('change', function(){
@@ -27,12 +45,13 @@ $('[name="withdraw_wallet_type"]').on('change', function(){
 		$('.withdraw .modal__fee').hide();
 		$('.withdraw .modal__manually').hide();
 		
+		$('.withdraw .modal').css('height', '300');
+
 		check_wallet($(this));
 	} else {
 		$('.withdraw .modal__field').show();
-		$('.withdraw .modal__details').show();
-		$('.withdraw .modal__fee').show();
-		$('.withdraw .modal__manually').show();
+		$('#withdraw_address').val('');
+		$('.withdraw .modal').css('height', '350');
 	}
 });
 

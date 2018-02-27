@@ -34,7 +34,7 @@
     document.querySelector('.check-balance-btn').addEventListener('click', function (e) {
       document.querySelector('.modal-wrap.check').classList.add('show');
       showPopup();
-      
+
       document.querySelector('.check .modal__form').classList.remove('none');
       document.querySelector('.check .modal__account').classList.add('none');
       document.querySelector('.modal-wrap.check').classList.add('auto-height');
