@@ -2,17 +2,16 @@
 $('.descr__link').filter('.check-balance-btn').click(function(){
 	$('.modal__radio.type').show();
 	$('#check_address').mask("******************************************", { placeholder: " " });	
-	$('#check_address').val('');	
 	$('[name="check_wallet_type"]').each(function(){
 		if($(this).attr('checked'))
-			check_wallet($(this));
+			check_type_wallet_check($(this));
 	});
 });
 
 $('[name="check_wallet_type"]').on('change', function(){
-	if($(this).attr('id').split('check_')[1] != WALLETS[2]){
-		check_wallet($(this));
-	} 
+	clearTimeout(check_mist_timeout);
+	
+	check_type_wallet_check($(this));
 });
 
 $('.check-bal-btn').on('click', function(){
@@ -29,10 +28,18 @@ $('.check-bal-btn').on('click', function(){
 });
 
 $('.modal__btn').filter('.withdraw-now-btn').click(function(){
+	$('.withdraw-bal-btn').hide();
 	$('.withdraw .modal').css('height', '600');
 	$('.withdraw .modal__details').show();
-	$('.withdraw .modal__fee').show();
-	$('.withdraw .modal__manually').show();
+	if($('[name="check_wallet_type"]:checked').attr('id').split('check_')[1] == WALLETS[2]){
+		$('.withdraw-bal-btn-metamask').hide();
+		$('.withdraw .modal__fee').show();
+		$('.withdraw .modal__manually').show();
+	} else {
+		$('.withdraw-bal-btn-metamask').show();
+		$('.withdraw .modal__fee').hide();
+		$('.withdraw .modal__manually').hide();
+	}
 	
 	var address = $('#check_withdraw_address').val();
 	$('#withdraw_address').val(address);
@@ -43,11 +50,20 @@ $('.modal__btn').filter('.withdraw-now-btn').click(function(){
 });
 
 $('.modal__btn').filter('.send-more-btn').click(function(){
-	show_form_wallet(true);
+	show_form_hold_manually(true);
 	$('#wallet_manually').attr('checked', true);
-
 	$('#contract_address').html('').append( CONTRACT_ADDRESS );
-	fill_manually_data_hold();
+	
+	if($('[name="check_wallet_type"]:checked').attr('id').split('check_')[1] == WALLETS[2]){
+		$('.send .modal__manually').show();
+		$('.send .modal__account').hide();
+		fill_manually_data_hold();
+	} else {
+		$('.send .modal__manually').hide();
+		$('.send .modal__account').show();
+	}
+	
+	
 	// если текущий контракт на 2 года, то убираем checkbox = 2 years
 	// если текущий контракт на 3 года, то убираем checkbox = 3 years
 	var address = $('#check_withdraw_address').val();
@@ -74,3 +90,22 @@ $('.modal__btn').filter('.send-more-btn').click(function(){
 	});
 
 });
+	
+function check_type_wallet_check(wallet_type_el){
+	if(wallet_type_el.attr('id').split('check_')[1] != WALLETS[2]){
+		show_form_check_manually(false)
+		check_wallet(wallet_type_el, 'check');
+	} else {
+		show_form_check_manually(true);
+	}
+}
+function show_form_check_manually(is_manually){
+	if(is_manually){
+		$('.check .modal__manually').show();
+		$('#check_address').val('');
+		$('#check_address').attr('disabled', false);
+	} else {
+		$('.check .modal__manually').hide();
+		$('#check_address').attr('disabled', true);
+	}
+}

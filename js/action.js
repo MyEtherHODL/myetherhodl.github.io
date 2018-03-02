@@ -22,8 +22,8 @@ const TERMS = {'wallet_one_year': 'hodlFor1y()', 'wallet_two_year': 'hodlFor2y()
 const COUNT_LATEST_HOLDERS = 6;
 const COUNT_TOP_HOLDERS = 5;
 
-var web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/BD2Tl5GWNlBNG0PB90dB"));
-if(!web3.net.listening){
+var web3_local = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/BD2Tl5GWNlBNG0PB90dB"));
+if(!web3_local.net.listening){
 	alert('Provider infura.io is not available');
 }
 
@@ -38,9 +38,9 @@ $('.ticker__link').click(function(){
 });
 
 function get_hodler_info(address){
-	var balance = web3.eth.contract(ABI).at(CONTRACT_ADDRESS).balanceOf(address) / Math.pow(10,18);
-	var term = web3.eth.contract(ABI).at(CONTRACT_ADDRESS).lockedFor(address);
-	var date_return = web3.eth.contract(ABI).at(CONTRACT_ADDRESS).lockedUntil(address);
+	var balance = web3_local.eth.contract(ABI).at(CONTRACT_ADDRESS).balanceOf(address) / Math.pow(10,18);
+	var term = web3_local.eth.contract(ABI).at(CONTRACT_ADDRESS).lockedFor(address);
+	var date_return = web3_local.eth.contract(ABI).at(CONTRACT_ADDRESS).lockedUntil(address);
 	var date_start_holding = date_return - term;
 	var date_now = ~~ (new Date().getTime() / 1000);
 	return {'balance': balance, 'term': term/60/60/24/365, 'date_start_holding': getDateTime(date_start_holding), 'date_return': getDateTime(date_return), 'days_left': ~~ ((date_return - date_now)/60/60/24)};
@@ -50,8 +50,8 @@ function fill_last_and_top_txs(){
 	var hodlers = [];
 	var already_hold = 0;
 	var biggest_hodler_week = {'balance': 0, 'address': CONTRACT_ADDRESS};
-	for(var i = 0; i < web3.eth.contract(ABI).at(CONTRACT_ADDRESS).hodlersCount(); i++){
-		var address = web3.eth.contract(ABI).at(CONTRACT_ADDRESS).hodlers(i);
+	for(var i = 0; i < web3_local.eth.contract(ABI).at(CONTRACT_ADDRESS).hodlersCount(); i++){
+		var address = web3_local.eth.contract(ABI).at(CONTRACT_ADDRESS).hodlers(i);
 		var hodler = get_hodler_info(address);
 		already_hold += hodler.balance;
 		hodlers.push({ 'address': address, 'balance': hodler.balance, 'date_start_holding': hodler.date_start_holding, 'term': hodler.term, 'date_return': hodler.date_return });
@@ -69,7 +69,7 @@ function fill_last_and_top_txs(){
 	$('#ticker_address').html('').append(biggest_hodler_week.address);
 	$('.results__top > .results__top-title').html('').append('Top '+COUNT_TOP_HOLDERS+' holders');
 	$('.results__title').html('').append(already_hold + " eth");
-	for(var i = hodlers.length-1; i > hodlers.length-1 - COUNT_LATEST_HOLDERS, i >= 0; i--){
+	for(var i = hodlers.length-1; /*hodlers.length-1 - COUNT_LATEST_HOLDERS,*/ i >= 0; i--){
 		var year_text = "year";
 		if( hodlers[i].term > 1)
 			year_text += "s";
@@ -91,7 +91,9 @@ function compareBalance(hodlersA, hodlersB) {
   return hodlersB.balance - hodlersA.balance;
 }
 
-function check_wallet(wallet_el){
+function check_wallet(wallet_el, action){
+	clearTimeout(check_mist_timeout);
+	
 	var t_w = wallet_el.attr('id');
 	$('.modal__warning').html('Please login into your ' + wallet_el.val());
 
@@ -101,7 +103,7 @@ function check_wallet(wallet_el){
 	}
 	
 	if(t_w == WALLETS[1] || t_w.split('withdraw_')[1] == WALLETS[1] || t_w.split('check_')[1] == WALLETS[1]){
-		check_mist();
+		check_mist(action);
 		return;
 	}
 }
@@ -120,8 +122,56 @@ function getDateTime(timestamp) {
 
 //-----
 function check_ledger(){
-	alert("check_ledger()");
+	$('.withdraw .modal__warning').show(); 
+	$('.withdraw .modal').css('height', '300');
+		
+	console.log("check_ledger()");
 }
-function check_mist(){
-	alert("check_mist()");
+var check_mist_timeout;
+function check_mist(action){
+	if(!web3.currentProvider.isMetaMask || web3.eth.defaultAccount == undefined){
+		if(action == "hold"){
+			$('.send .modal__warning').show(); 
+			$('.send .modal__account').hide(); 
+		}
+		
+		if(action == "withdraw"){
+			$('.withdraw .modal__warning').show(); 
+			$('.withdraw-bal-btn').hide();
+			$('.withdraw .modal__manually').hide();
+			
+			$('.withdraw .modal').css('height', '300');
+		}
+		
+		check_mist_timeout = setTimeout(function(){
+			check_mist(action);
+		}, 500);
+		return;
+	}
+	
+	if(action == "hold"){
+		$('.send .modal__warning').hide(); 
+		$('.send .modal__account').show(); 
+	}
+	
+	if(action == "withdraw"){
+		$('.withdraw .modal__warning').hide(); 
+		$('.withdraw .withdraw-bal-btn').hide();
+		$('.withdraw .withdraw-bal-btn-metamask').show();
+		$('.withdraw .modal__field').show();
+		$('.withdraw .modal__details').show(); 
+		
+		$('.withdraw .modal').css('height', '600');
+		$('#withdraw_address').val(web3.eth.defaultAccount);
+		var hodler = get_hodler_info(web3.eth.defaultAccount);
+		update_hodler_info(hodler);
+	}
+	
+	if(action == "check"){
+		$('.check .modal__warning').hide(); 
+		$('.check .modal__manually').show();
+		$('#check_address').val(web3.eth.defaultAccount);
+	}
+	
+	console.log("check_mist()");
 }

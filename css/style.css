@@ -1604,9 +1604,13 @@ button {
   content: 'Send';
   border: 2px solid #000000;
 }
+.modal__btn.withdraw-bal-btn:before,
 .modal__btn.check-btn:before,
 .modal__btn.check-bal-btn:before {
   content: 'Check';
+}
+.modal__btn.withdraw-bal-btn-metamask:before {
+  content: 'Get it';
 }
 .modal__btn.send-more-btn:before {
   content: 'Send more';

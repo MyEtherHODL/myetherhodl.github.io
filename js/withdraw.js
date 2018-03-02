@@ -6,23 +6,18 @@ $('.promo__btn').filter('.withdraw').click(function(){
 	$('#withdraw_address').html('').append( CONTRACT_ADDRESS );
 	$('[name="withdraw_wallet_type"]').each(function(){
 		if($(this).attr('checked'))
-			check_wallet($(this));
+			check_type_wallet_withdraw($(this));
 	});
 	$('#withdraw_address').mask("******************************************", { placeholder: " " });
-	$('#withdraw_address').val('');
 	$('#withdraw_data').html('').append( get_kessak256_data('party()') );
 	$('#withdraw_contract_address').html('').append( CONTRACT_ADDRESS );
-	update_hodler_info();
-
-	$('.withdraw .modal__details').hide();
-	$('.withdraw .modal__fee').hide();
-	$('.withdraw .modal__manually').hide();
-	$('.withdraw .modal').css('height', '350');
 });
 
-$('#withdraw_address').on('change', function(){
-	if($('#withdraw_address').val().length == 0){
-		$('.withdraw .modal').css('height', '350');
+$('.withdraw-bal-btn').on('click', function(){
+	if($('#withdraw_address').val().length != 42){
+		$('#withdraw_address').fadeTo(100, 0.1).fadeTo(200, 1.0);
+		
+		$('.withdraw .modal').css('height', '450');
 
 		$('.withdraw .modal__details').hide();
 		$('.withdraw .modal__fee').hide();
@@ -30,30 +25,48 @@ $('#withdraw_address').on('change', function(){
 	} else {
 		$('.withdraw .modal').css('height', '600');
 
-		var hodler = get_hodler_info($(this).val());
+		var hodler = get_hodler_info($('#withdraw_address').val());
 		update_hodler_info(hodler);
+		$('.withdraw .withdraw-bal-btn').hide();
 		$('.withdraw .modal__details').show();
 		$('.withdraw .modal__fee').show();
 		$('.withdraw .modal__manually').show();
 	}
 });
+	
 
 $('[name="withdraw_wallet_type"]').on('change', function(){
-	if($(this).attr('id').split('withdraw_')[1] != WALLETS[2]){
-		$('.withdraw .modal__field').hide();
-		$('.withdraw .modal__details').hide();
-		$('.withdraw .modal__fee').hide();
-		$('.withdraw .modal__manually').hide();
-		
-		$('.withdraw .modal').css('height', '300');
-
-		check_wallet($(this));
-	} else {
-		$('.withdraw .modal__field').show();
-		$('#withdraw_address').val('');
-		$('.withdraw .modal').css('height', '350');
-	}
+	clearTimeout(check_mist_timeout);
+	
+	$('.withdraw .modal').css('height', '450');
+	check_type_wallet_withdraw($(this));
 });
+
+function check_type_wallet_withdraw(wallet_type_el){
+	if(wallet_type_el.attr('id').split('withdraw_')[1] != WALLETS[2]){
+		show_form_withdraw_manually(false)
+		check_wallet(wallet_type_el, 'withdraw');
+	} else {
+		show_form_withdraw_manually(true);
+	}
+}
+function show_form_withdraw_manually(is_manually){
+	$('.withdraw .withdraw-bal-btn-metamask').hide();
+	$('.withdraw .modal__details').hide();
+	$('.withdraw .modal__fee').hide();
+	$('.withdraw .modal__manually').hide();
+	
+	if(is_manually){
+		$('.withdraw .modal__field').show();
+		$('.withdraw .withdraw-bal-btn').show();
+		$('.withdraw .modal').css('height', '450');
+		$('#withdraw_address').val('');
+		$('#withdraw_address').attr('disabled', false);
+	} else {
+		$('.withdraw .modal__field').hide();
+		$('#withdraw_address').attr('disabled', true);
+	}
+}
 
 function update_hodler_info(hodler){
 	var balance = '-- ETH';

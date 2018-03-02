@@ -5,7 +5,7 @@ $('.promo__btn').filter('.hold').click(function(){
 	$('#contract_address').html('').append( CONTRACT_ADDRESS );
 	$('[name="wallet_type"]').each(function(){
 		if($(this).attr('checked')){
-			check_type_wallet($(this));
+			check_type_wallet_hold($(this));
 		}
 	});
 	$('[name="wallet_term"]').each(function(){
@@ -20,7 +20,9 @@ $('.promo__btn').filter('.hold').click(function(){
 });
 
 $('[name="wallet_type"]').on('change', function(){
-	check_type_wallet($(this));
+	clearTimeout(check_mist_timeout);
+	
+	check_type_wallet_hold($(this));
 });
 
 $('[name="wallet_term"]').on('change', function(){
@@ -34,16 +36,16 @@ function fill_manually_data_hold(){
 function get_kessak256_data(method){
 	return Object.keys(kessak256)[Object.values(kessak256).indexOf(method)];
 }
-function check_type_wallet(wallet_type_el){
+function check_type_wallet_hold(wallet_type_el){
 	if(wallet_type_el.attr('id') != WALLETS[2]){
-		show_form_wallet(false)
-		check_wallet(wallet_type_el);
+		show_form_hold_manually(false)
+		check_wallet(wallet_type_el, 'hold');
 	} else {
-		show_form_wallet(true);
+		show_form_hold_manually(true);
 		fill_manually_data_hold();
 	}
 }
-function show_form_wallet(is_manually){
+function show_form_hold_manually(is_manually){
 	if(is_manually){
 		$('.send .modal__account').hide();
 		$('.send .modal__manually').show();
