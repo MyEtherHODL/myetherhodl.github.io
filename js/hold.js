@@ -77,17 +77,15 @@ function hold(wallet_type, check_wallet_type){
 	$('.send .modal__status :nth-child(2)').html(web3.eth.defaultAccount);
 		
 	if(wallet_type == WALLETS[1] || check_wallet_type == WALLETS[1]){
-		web3.eth.sendTransaction({ 'from':web3.eth.defaultAccount, 'to': CONTRACT_ADDRESS, 'data': get_kessak256_data(TERMS[$('[name="wallet_term"]:checked').attr('id')])/*, gas:85000*/}, function(err, txHash){
+		web3.eth.sendTransaction({ 'from':web3.eth.defaultAccount, 'to': CONTRACT_ADDRESS, 'data': get_kessak256_data(TERMS[$('[name="wallet_term"]:checked').attr('id')]), 'value': $('#eth_amount').val()*Math.pow(10, 18) /*, gas:85000*/}, function(err, txHash){
 			if(err){
 				$('.send .modal__status').hide();
 				$('.send .modal__status :nth-child(2)').html('');
 			} else {
-				console.log(txHash);
 				$('.send .modal__status').addClass('success');
 				$('.send .modal__status .modal__status-str').html('SUCCESS: ');
 				$('.send .modal__status :nth-child(2)').html('<span id="hold_txHash" class="addr__link">'+txHash+'</span>');
 				$('#hold_txHash').on('click', function(){
-					console.log("https://ropsten.etherscan.io/tx/"+$(this).html());
 					window.open("https://ropsten.etherscan.io/tx/"+$(this).html(), '_blank');
 				});
 			}

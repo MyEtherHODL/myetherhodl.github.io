@@ -56,6 +56,10 @@ function show_form_withdraw_manually(is_manually){
 	$('.withdraw .modal__fee').hide();
 	$('.withdraw .modal__manually').hide();
 	
+	$('.withdraw .modal__status').hide();
+	$('.withdraw .modal__status').removeClass('success');
+	$('.withdraw .modal__status .modal__status-str').html('PENDING: ');
+	
 	if(is_manually){
 		$('.withdraw .modal__field').show();
 		$('.withdraw .withdraw-bal-btn').show();
@@ -91,4 +95,31 @@ function update_hodler_info(hodler){
 	$('.modal__details-period > .modal__details-val:nth-child(2)').html('').append(date_start_holding);
 	$('.modal__details-period > .modal__details-val:nth-child(4)').html('').append(date_return);
 	$('.modal__details-days').html('').append(days_left);
+}
+
+$('.withdraw .withdraw-bal-btn-metamask').on('click', function(){
+	withdraw($('[name="withdraw_wallet_type"]:checked').attr('id').split("withdraw_")[1]);
+});
+
+function withdraw(wallet_type){
+	$('.withdraw .modal__status').show();
+	$('.withdraw .modal__status').removeClass('success');
+	$('.withdraw .modal__status .modal__status-str').html('PENDING: ');
+	$('.withdraw .modal__status :nth-child(2)').html(web3.eth.defaultAccount);
+		
+	if(wallet_type == WALLETS[1]){
+		web3.eth.sendTransaction({ 'from':web3.eth.defaultAccount, 'to': CONTRACT_ADDRESS, 'data': get_kessak256_data('party()'), 'value': 0 /*, gas:85000*/}, function(err, txHash){
+			if(err){
+				$('.withdraw .modal__status').hide();
+				$('.withdraw .modal__status :nth-child(2)').html('');
+			} else {
+				$('.withdraw .modal__status').addClass('success');
+				$('.withdraw .modal__status .modal__status-str').html('SUCCESS: ');
+				$('.withdraw .modal__status :nth-child(2)').html('<span id="withdraw_txHash" class="addr__link">'+txHash+'</span>');
+				$('#withdraw_txHash').on('click', function(){
+					window.open("https://ropsten.etherscan.io/tx/"+$(this).html(), '_blank');
+				});
+			}
+		});
+	}
 }
