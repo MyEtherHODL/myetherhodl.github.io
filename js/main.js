@@ -77,11 +77,6 @@
 
     document.querySelector('.send-btn').addEventListener('click', function(e) {
       e.preventDefault();
-      status.classList.remove('none');
-      setTimeout(function() {
-        status.classList.add('success')
-        document.querySelector('.modal__status-str').innerText ='Success: ';
-      }, 2000);
     });
 
     document.querySelector('.check-btn').addEventListener('click', function (e) {

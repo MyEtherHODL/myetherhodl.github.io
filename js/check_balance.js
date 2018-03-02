@@ -61,6 +61,7 @@ $('.modal__btn').filter('.send-more-btn').click(function(){
 	} else {
 		$('.send .modal__manually').hide();
 		$('.send .modal__account').show();
+		$('#eth_amount').val('');
 	}
 	
 	

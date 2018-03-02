@@ -1623,7 +1623,6 @@ button {
   overflow: hidden;
   width: 100%;
   margin-top: 20px;
-  text-transform: uppercase;
   text-overflow: ellipsis;
   color: #AABFFA;
 }
