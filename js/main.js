@@ -72,7 +72,7 @@
       document.querySelector('.modal-wrap.send').classList.add('show');
       body.classList.add('double');
       document.querySelector('.send .modal__title').innerText = 'Send More Ethers';
-      document.querySelector('#wallet_one_year + label').innerText = 'Current term';
+      //document.querySelector('#wallet_one_year + label').innerText = 'Current term';
     });
 
     document.querySelector('.send-btn').addEventListener('click', function(e) {

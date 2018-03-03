@@ -86,6 +86,8 @@ $('.modal__btn').filter('.send-more-btn').click(function(){
 			$("label[for='"+$(this).attr("id")+"']").html($(this).val()+year);
 		}
 		if(parseInt($(this).val()) == hodler.term){
+			if(parseInt($(this).val()) == 1)
+				$('#wallet_one_year + label').html('Current term');
 			if(parseInt($(this).val()) == 2)
 				$('#wallet_two_year + label').html('Current term');
 			if(parseInt($(this).val()) == 3)
@@ -94,7 +96,6 @@ $('.modal__btn').filter('.send-more-btn').click(function(){
 			fill_manually_data_hold();
 		}
 	});
-
 });
 	
 function check_type_wallet_check(wallet_type_el){

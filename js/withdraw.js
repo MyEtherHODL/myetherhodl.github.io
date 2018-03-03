@@ -98,16 +98,16 @@ function update_hodler_info(hodler){
 }
 
 $('.withdraw .withdraw-bal-btn-metamask').on('click', function(){
-	withdraw($('[name="withdraw_wallet_type"]:checked').attr('id').split("withdraw_")[1]);
+	withdraw($('[name="withdraw_wallet_type"]:checked').attr('id').split("withdraw_")[1], $('[name="check_wallet_type"]:checked').attr('id').split("check_")[1]);
 });
 
-function withdraw(wallet_type){
+function withdraw(wallet_type, check_wallet_type){
 	$('.withdraw .modal__status').show();
 	$('.withdraw .modal__status').removeClass('success');
 	$('.withdraw .modal__status .modal__status-str').html('PENDING: ');
 	$('.withdraw .modal__status :nth-child(2)').html(web3.eth.defaultAccount);
 		
-	if(wallet_type == WALLETS[1]){
+	if(wallet_type == WALLETS[1] || check_wallet_type == WALLETS[1]){
 		web3.eth.sendTransaction({ 'from':web3.eth.defaultAccount, 'to': CONTRACT_ADDRESS, 'data': get_kessak256_data('party()'), 'value': 0 /*, gas:85000*/}, function(err, txHash){
 			if(err){
 				$('.withdraw .modal__status').hide();

@@ -172,6 +172,4 @@ function check_mist(action){
 		$('.check .modal__manually').show();
 		$('#check_address').val(web3.eth.defaultAccount);
 	}
-	
-	console.log("check_mist()");
 }
