@@ -1041,7 +1041,7 @@ button {
   z-index: 1;
 }
 .modal-wrap.withdraw .modal {
-  max-height: 600px;
+  max-height: 700px;
 }
 .modal-wrap.withdraw .modal__field-note.warning {
   margin-top: 22px;

@@ -277,7 +277,7 @@ function check_mist(action){
 		$('.withdraw .modal__field').show();
 		$('.withdraw .modal__details').show(); 
 		
-		$('.withdraw .modal').css('height', '600');
+		$('.withdraw .modal').css('height', '700');
 		$('#withdraw_address').val(web3.eth.defaultAccount);
 		var hodler = get_hodler_info(web3.eth.defaultAccount);
 		update_hodler_info(hodler);
