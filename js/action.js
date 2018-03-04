@@ -186,6 +186,7 @@ function fill_last_and_top_txs_v2(){
 			var tooltip	= "eth will be returned</br>in "+_hodlers[i].info.term+" "+year_text+" ("+_hodlers[i].info.untilTime+")";
 			$('.results__top').append('<div class="results__top-item"><span class="results__top-count increase" data-tooltip="'+tooltip+'">'+_hodlers[i].info.amount+' Eth</span> <span class="">'+_hodlers[i].hodler+'</span></div>');	
 		}
+		
 		init_tooltip();
 		// OTHER FIELDS
 		var biggest_hodler_week_balance = biggest_hodler_week.args.amount.toNumber() / Math.pow(10,18);
@@ -277,7 +278,7 @@ function check_mist(action){
 		$('.withdraw .modal__field').show();
 		$('.withdraw .modal__details').show(); 
 		
-		$('.withdraw .modal').css('height', '700');
+		$('.withdraw .modal').css('height', '640');
 		$('#withdraw_address').val(web3.eth.defaultAccount);
 		var hodler = get_hodler_info(web3.eth.defaultAccount);
 		update_hodler_info(hodler);
