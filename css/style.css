@@ -1507,6 +1507,7 @@ button {
   padding: 0 15px;
   color: #FFFFFF;
   border: 2px solid #FFFFFF;
+  text-overflow: ellipsis;
 }
 @media (min-width: 768px) {
   .modal__field-input,
