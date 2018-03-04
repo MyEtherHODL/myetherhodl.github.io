@@ -167,12 +167,14 @@ function fill_last_and_top_txs_v2(){
 			if(term > 1)
 				year_text += "s";
 			var tooltip	= "eth will be returned</br>in "+term+" "+year_text+" ("+untilTime+")";
+			if(inc_dec == "decrease"){
+				tooltip = "eth was returned";
+			}
 			$('.results__latest').append('<div class="results__top-item"><span class="results__top-count '+inc_dec+'" data-tooltip="'+tooltip+'">'+amount+' Eth</span> <span class="addr__link">'+hodler+'</span> <span class="none">'+tx[i].transactionHash+'</span></div>');	
 			
 		}
 		
 		// TOP 5 HOLDERS
-		console.log(hodlers);
 		var _hodlers = [];
 		for(var key in hodlers){
 		  _hodlers.push({'hodler': key, 'info': hodlers[key]});
@@ -182,8 +184,9 @@ function fill_last_and_top_txs_v2(){
 			if(term > 1)
 				year_text += "s";
 			var tooltip	= "eth will be returned</br>in "+_hodlers[i].info.term+" "+year_text+" ("+_hodlers[i].info.untilTime+")";
-			$('.results__top').append('<div class="results__top-item"><span class="results__top-count increase" data-tooltip="'+tooltip+'">'+_hodlers[i].info.amount+' Eth</span> <span class="addr__link">'+_hodlers[i].hodler+'</span></div>');	
+			$('.results__top').append('<div class="results__top-item"><span class="results__top-count increase" data-tooltip="'+tooltip+'">'+_hodlers[i].info.amount+' Eth</span> <span class="">'+_hodlers[i].hodler+'</span></div>');	
 		}
+		init_tooltip();
 		// OTHER FIELDS
 		var biggest_hodler_week_balance = biggest_hodler_week.args.amount.toNumber() / Math.pow(10,18);
 		var biggest_hodler_week_address = biggest_hodler_week.args.hodler;
