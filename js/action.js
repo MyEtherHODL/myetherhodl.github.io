@@ -1,5 +1,8 @@
-const CONTRACT_ADDRESS = '0xc35679FB3cFC2d8f0bd6860BeBCB072391D76043';
-const ABI = [{"constant":false,"inputs":[{"name":"hodler","type":"address"}],"name":"partyTo","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"hodlersCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"party","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"hodlFor3y","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"hodlFor2y","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"hodlFor1y","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"indexOfHodler","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"hodlers","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"lockedUntil","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"lockedFor","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hodler","type":"address"},{"indexed":true,"name":"amount","type":"uint256"},{"indexed":false,"name":"untilTime","type":"uint256"},{"indexed":false,"name":"duration","type":"uint256"}],"name":"Hodl","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hodler","type":"address"},{"indexed":true,"name":"amount","type":"uint256"},{"indexed":false,"name":"duration","type":"uint256"}],"name":"Party","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hodler","type":"address"},{"indexed":true,"name":"amount","type":"uint256"},{"indexed":false,"name":"elapsed","type":"uint256"}],"name":"Fee","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"previousOwner","type":"address"},{"indexed":true,"name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"}];
+const CONTRACT_ADDRESS = '0x4222Ab28A07E918D9F82c2B3aCa0a42102184D46';
+const CREATE_CONTRACT_BLOCK = 2757685;
+const ABI = [{"constant":false,"inputs":[{"name":"hodler","type":"address"}],"name":"partyTo","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"hodlersCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"index","type":"uint256"}],"name":"get2","outputs":[{"name":"hodler1","type":"address"},{"name":"balance1","type":"uint256"},{"name":"lockedUntil1","type":"uint256"},{"name":"lockedFor1","type":"uint256"},{"name":"hodler2","type":"address"},{"name":"balance2","type":"uint256"},{"name":"lockedUntil2","type":"uint256"},{"name":"lockedFor2","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"party","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"hodlFor3y","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"hodlFor2y","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"hodlFor1y","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"indexOfHodler","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"hodlers","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"lockedUntil","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"loser","type":"address"}],"name":"recoverLost","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"index","type":"uint256"}],"name":"get1","outputs":[{"name":"hodler1","type":"address"},{"name":"balance1","type":"uint256"},{"name":"lockedUntil1","type":"uint256"},{"name":"lockedFor1","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"index","type":"uint256"}],"name":"get3","outputs":[{"name":"hodler1","type":"address"},{"name":"balance1","type":"uint256"},{"name":"lockedUntil1","type":"uint256"},{"name":"lockedFor1","type":"uint256"},{"name":"hodler2","type":"address"},{"name":"balance2","type":"uint256"},{"name":"lockedUntil2","type":"uint256"},{"name":"lockedFor2","type":"uint256"},{"name":"hodler3","type":"address"},{"name":"balance3","type":"uint256"},{"name":"lockedUntil3","type":"uint256"},{"name":"lockedFor3","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"lockedFor","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hodler","type":"address"},{"indexed":true,"name":"amount","type":"uint256"},{"indexed":false,"name":"untilTime","type":"uint256"},{"indexed":false,"name":"duration","type":"uint256"}],"name":"Hodl","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hodler","type":"address"},{"indexed":true,"name":"amount","type":"uint256"},{"indexed":false,"name":"duration","type":"uint256"}],"name":"Party","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hodler","type":"address"},{"indexed":true,"name":"amount","type":"uint256"},{"indexed":false,"name":"elapsed","type":"uint256"}],"name":"Fee","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"previousOwner","type":"address"},{"indexed":true,"name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"}];
+var ROPSTEN = 1;
+ROPSTEN ? ROPSTEN = "ropsten." : ROPSTEN = "";
 
 const kessak256 = {
     "70a08231": "balanceOf(address)",
@@ -17,24 +20,21 @@ const kessak256 = {
     "f2fde38b": "transferOwnership(address)"
 };
 
+const INFURA_URL = "https://ropsten.infura.io/BD2Tl5GWNlBNG0PB90dB";
 const WALLETS = ['wallet_ledger', 'wallet_mist', 'wallet_manually'];
 const TERMS = {'wallet_one_year': 'hodlFor1y()', 'wallet_two_year': 'hodlFor2y()', 'wallet_three_year': 'hodlFor3y()'};
 const COUNT_LATEST_HOLDERS = 6;
 const COUNT_TOP_HOLDERS = 5;
 
-var web3_local = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/BD2Tl5GWNlBNG0PB90dB"));
+var web3_local = new Web3(new Web3.providers.HttpProvider(INFURA_URL));
 if(!web3_local.net.listening){
 	alert('Provider infura.io is not available');
 }
 
-fill_last_and_top_txs();
-
-$('.results__top-item :nth-child(2)').click(function(){
-	window.open("https://etherscan.io/address/"+$(this).html(), '_blank');
-});
+load_transactions();
 
 $('.ticker__link').click(function(){
-	window.open("https://etherscan.io/address/"+$('#ticker_address').html(), '_blank');
+	window.open("https://"+ROPSTEN+"etherscan.io/tx/"+$('#ticker_tx').html(), '_blank');
 });
 
 function get_hodler_info(address){
@@ -89,6 +89,119 @@ function fill_last_and_top_txs(){
 }
 function compareBalance(hodlersA, hodlersB) {
   return hodlersB.balance - hodlersA.balance;
+}
+
+var tx_load = { 'Hold':{ 'status': false, 'data':null }, 'Party':{ 'status': false, 'data':null } };
+function load_transactions(){
+	var engine = new ZeroClientProvider({
+	  getAccounts: function(){},
+	  rpcUrl: INFURA_URL,
+	});
+	
+	var option = {
+	  address: CONTRACT_ADDRESS,
+	  fromBlock: CREATE_CONTRACT_BLOCK,
+	  toBlock: 'latest'
+	};
+	
+	var web3_tx_hold = new Web3(engine);
+	web3_tx_hold.eth.contract(ABI).at(CONTRACT_ADDRESS).Hodl({}, option).get(function (err, result) {
+		if(!err){
+			tx_load.Hold.status = true;
+			tx_load.Hold.data = result;
+			delete web3_tx_hold;
+			fill_last_and_top_txs_v2();
+		}
+	});
+	var web3_tx_party = new Web3(engine);
+	web3_tx_party.eth.contract(ABI).at(CONTRACT_ADDRESS).Party({}, option).get(function (err, result) {
+		if(!err){
+			tx_load.Party.status = true;
+			tx_load.Party.data = result;
+			delete web3_tx_party;
+			fill_last_and_top_txs_v2();
+		}
+	})
+}
+function fill_last_and_top_txs_v2(){
+	if(tx_load.Hold.status && tx_load.Party.status){
+		var tx = tx_load.Hold.data.concat(tx_load.Party.data);
+		tx.sort(function(a,b){ return b.blockNumber-a.blockNumber })
+		
+		var contract_balance = web3_local.eth.getBalance(CONTRACT_ADDRESS).toNumber() / Math.pow(10,18);
+		
+		var withdraw_hodlers = [];
+		var biggest_hodler_week;
+		var hodlers = [];
+		for(var i = 0; i < tx.length; i++){
+			var inc_dec = "";
+			var term = tx[i].args.duration/365/24/60/60;
+			var amount = tx[i].args.amount.toNumber()/Math.pow(10,18);
+			var untilTime = "";
+			var hodler = tx[i].args.hodler;
+			
+			if(tx[i].event == "Party"){
+				inc_dec = "decrease";
+				amount = "-"+amount;
+				withdraw_hodlers.push(tx[i].args.hodler);
+			} else if(tx[i].event == "Hodl"){
+				inc_dec = "increase";
+				untilTime = getDateTime( tx[i].args.untilTime.toNumber() );
+				
+				if(biggest_hodler_week == undefined){
+					biggest_hodler_week = tx[i];
+				} else if(biggest_hodler_week.args.amount.toNumber() < tx[i].args.amount.toNumber()){
+					biggest_hodler_week = tx[i];
+				}
+				
+				if(withdraw_hodlers.indexOf(hodler) == -1){
+					if(hodlers[hodler] == undefined){
+						hodlers[hodler] = {'amount': amount, 'term': term, 'untilTime': untilTime};
+					} else {
+						hodlers[hodler].amount += amount;
+					}	
+				}	
+			}
+			// LATEST HOLDERS
+			var year_text = "year";
+			if(term > 1)
+				year_text += "s";
+			var tooltip	= "eth will be returned</br>in "+term+" "+year_text+" ("+untilTime+")";
+			$('.results__latest').append('<div class="results__top-item"><span class="results__top-count '+inc_dec+'" data-tooltip="'+tooltip+'">'+amount+' Eth</span> <span class="addr__link">'+hodler+'</span> <span class="none">'+tx[i].transactionHash+'</span></div>');	
+			
+		}
+		
+		// TOP 5 HOLDERS
+		console.log(hodlers);
+		var _hodlers = [];
+		for(var key in hodlers){
+		  _hodlers.push({'hodler': key, 'info': hodlers[key]});
+		}
+		for(var i = 0; i < COUNT_TOP_HOLDERS, i < _hodlers.sort(compareAmount).length; i++){
+			var year_text = "year";
+			if(term > 1)
+				year_text += "s";
+			var tooltip	= "eth will be returned</br>in "+_hodlers[i].info.term+" "+year_text+" ("+_hodlers[i].info.untilTime+")";
+			$('.results__top').append('<div class="results__top-item"><span class="results__top-count increase" data-tooltip="'+tooltip+'">'+_hodlers[i].info.amount+' Eth</span> <span class="addr__link">'+_hodlers[i].hodler+'</span></div>');	
+		}
+		// OTHER FIELDS
+		var biggest_hodler_week_balance = biggest_hodler_week.args.amount.toNumber() / Math.pow(10,18);
+		var biggest_hodler_week_address = biggest_hodler_week.args.hodler;
+		var biggest_hodler_week_tx = biggest_hodler_week.transactionHash;
+		$('.ticker__link').html('').append(biggest_hodler_week_balance + " eth"); 
+		$('#ticker_address').html('').append(biggest_hodler_week_address);
+		$('#ticker_tx').html('').append(biggest_hodler_week_tx);
+		
+		$('.results__top > .results__top-title').html('').append('Top '+COUNT_TOP_HOLDERS+' holders');
+		$('.results__title').html('').append(contract_balance + " eth");
+		
+		$('.results__latest .results__top-item :nth-child(2)').click(function(){
+			window.open("https://"+ROPSTEN+"etherscan.io/tx/"+$(this).next().html(), '_blank');
+		});
+	}
+}
+function compareAmount(hodlersA, hodlersB) {
+  return hodlersB.info.amount - hodlersA.info.amount;
 }
 
 function check_wallet(wallet_el, action){
