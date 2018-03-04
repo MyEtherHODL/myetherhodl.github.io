@@ -34,7 +34,6 @@ $('.modal__btn').filter('.withdraw-now-btn').click(function(){
 	$('.withdraw .modal__status').removeClass('success');
 	$('.withdraw .modal__status .modal__status-str').html('PENDING: ');
 	
-	console.log($('[name="check_wallet_type"]:checked').attr('id').split('check_')[1]);
 	if($('[name="check_wallet_type"]:checked').attr('id').split('check_')[1] == WALLETS[2]){
 		$('.withdraw .modal').css('height', '600');
 		$('.withdraw-bal-btn-metamask').hide();
