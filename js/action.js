@@ -55,17 +55,17 @@ function fill_last_and_top_txs(){
 		var hodler = get_hodler_info(address);
 		already_hold += hodler.balance;
 		hodlers.push({ 'address': address, 'balance': hodler.balance, 'date_start_holding': hodler.date_start_holding, 'term': hodler.term, 'date_return': hodler.date_return });
-		
+
 		var date_arr = hodler.date_start_holding.split('/');
 		var curret_unixtime = parseInt(new Date().getTime()/1000);
 		var hodler_unixtime = parseInt(new Date(parseInt(date_arr[2]),parseInt(date_arr[1])-1,parseInt(date_arr[0])).getTime()/1000);
-		if( curret_unixtime - hodler_unixtime < 8*24*60*60 && 
+		if( curret_unixtime - hodler_unixtime < 8*24*60*60 &&
 			biggest_hodler_week.balance < hodler.balance){
 			biggest_hodler_week = {'balance': hodler.balance, 'address': address };
 		}
 	}
 
-	$('.ticker__link').html('').append(biggest_hodler_week.balance + " eth"); 
+	$('.ticker__link').html('').append(biggest_hodler_week.balance + " eth");
 	$('#ticker_address').html('').append(biggest_hodler_week.address);
 	$('.results__top > .results__top-title').html('').append('Top '+COUNT_TOP_HOLDERS+' holders');
 	$('.results__title').html('').append(already_hold + " eth");
@@ -76,7 +76,7 @@ function fill_last_and_top_txs(){
 		var tooltip	= "eth will be returned</br>in "+hodlers[i].term+" "+year_text+" ("+hodlers[i].date_return+")";
 
 		$('.results__latest').append('<div class="results__top-item"><span class="results__top-count increase" data-tooltip="'+tooltip+'">'+hodlers[i].balance+' Eth</span> <span class="addr__link">'+hodlers[i].address+'</span></div>');
-		
+
 	}
 	for(var i = 0; i < COUNT_TOP_HOLDERS, i < hodlers.sort(compareBalance).length; i++){
 		var year_text = "year";
@@ -97,13 +97,13 @@ function load_transactions(){
 	  getAccounts: function(){},
 	  rpcUrl: INFURA_URL,
 	});
-	
+
 	var option = {
 	  address: CONTRACT_ADDRESS,
 	  fromBlock: CREATE_CONTRACT_BLOCK,
 	  toBlock: 'latest'
 	};
-	
+
 	var web3_tx_hold = new Web3(engine);
 	web3_tx_hold.eth.contract(ABI).at(CONTRACT_ADDRESS).Hodl({}, option).get(function (err, result) {
 		if(!err){
@@ -127,9 +127,9 @@ function fill_last_and_top_txs_v2(){
 	if(tx_load.Hold.status && tx_load.Party.status){
 		var tx = tx_load.Hold.data.concat(tx_load.Party.data);
 		tx.sort(function(a,b){ return b.blockNumber-a.blockNumber })
-		
+
 		var contract_balance = web3_local.eth.getBalance(CONTRACT_ADDRESS).toNumber() / Math.pow(10,18);
-		
+
 		var withdraw_hodlers = [];
 		var biggest_hodler_week;
 		var hodlers = [];
@@ -139,7 +139,7 @@ function fill_last_and_top_txs_v2(){
 			var amount = tx[i].args.amount.toNumber()/Math.pow(10,18);
 			var untilTime = "";
 			var hodler = tx[i].args.hodler;
-			
+
 			if(tx[i].event == "Party"){
 				inc_dec = "decrease";
 				amount = "-"+amount;
@@ -147,20 +147,20 @@ function fill_last_and_top_txs_v2(){
 			} else if(tx[i].event == "Hodl"){
 				inc_dec = "increase";
 				untilTime = getDateTime( tx[i].args.untilTime.toNumber() );
-				
+
 				if(biggest_hodler_week == undefined){
 					biggest_hodler_week = tx[i];
 				} else if(biggest_hodler_week.args.amount.toNumber() < tx[i].args.amount.toNumber()){
 					biggest_hodler_week = tx[i];
 				}
-				
+
 				if(withdraw_hodlers.indexOf(hodler) == -1){
 					if(hodlers[hodler] == undefined){
 						hodlers[hodler] = {'amount': amount, 'term': term, 'untilTime': untilTime};
 					} else {
 						hodlers[hodler].amount += amount;
-					}	
-				}	
+					}
+				}
 			}
 			// LATEST HOLDERS
 			var year_text = "year";
@@ -170,10 +170,10 @@ function fill_last_and_top_txs_v2(){
 			if(inc_dec == "decrease"){
 				tooltip = "eth was returned";
 			}
-			$('.results__latest').append('<div class="results__top-item"><span class="results__top-count '+inc_dec+'" data-tooltip="'+tooltip+'">'+amount+' Eth</span> <span class="addr__link">'+hodler+'</span> <span class="none">'+tx[i].transactionHash+'</span></div>');	
-			
+			$('.results__latest').append('<div class="results__top-item"><span class="results__top-count '+inc_dec+'" data-tooltip="'+tooltip+'">'+amount+' Eth</span> <span class="addr__link">'+hodler+'</span> <span class="none">'+tx[i].transactionHash+'</span></div>');
+
 		}
-		
+
 		// TOP 5 HOLDERS
 		var _hodlers = [];
 		for(var key in hodlers){
@@ -184,21 +184,21 @@ function fill_last_and_top_txs_v2(){
 			if(term > 1)
 				year_text += "s";
 			var tooltip	= "eth will be returned</br>in "+_hodlers[i].info.term+" "+year_text+" ("+_hodlers[i].info.untilTime+")";
-			$('.results__top').append('<div class="results__top-item"><span class="results__top-count increase" data-tooltip="'+tooltip+'">'+_hodlers[i].info.amount+' Eth</span> <span class="">'+_hodlers[i].hodler+'</span></div>');	
+			$('.results__top').append('<div class="results__top-item"><span class="results__top-count increase" data-tooltip="'+tooltip+'">'+_hodlers[i].info.amount+' Eth</span> <span class="">'+_hodlers[i].hodler+'</span></div>');
 		}
-		
+
 		init_tooltip();
 		// OTHER FIELDS
 		var biggest_hodler_week_balance = biggest_hodler_week.args.amount.toNumber() / Math.pow(10,18);
 		var biggest_hodler_week_address = biggest_hodler_week.args.hodler;
 		var biggest_hodler_week_tx = biggest_hodler_week.transactionHash;
-		$('.ticker__link').html('').append(biggest_hodler_week_balance + " eth"); 
+		$('.ticker__link').html('').append(biggest_hodler_week_balance + " eth");
 		$('#ticker_address').html('').append(biggest_hodler_week_address);
 		$('#ticker_tx').html('').append(biggest_hodler_week_tx);
-		
+
 		$('.results__top > .results__top-title').html('').append('Top '+COUNT_TOP_HOLDERS+' holders');
 		$('.results__title').html('').append(contract_balance + " eth");
-		
+
 		$('.results__latest .results__top-item :nth-child(2)').click(function(){
 			window.open("https://"+ROPSTEN+"etherscan.io/tx/"+$(this).next().html(), '_blank');
 		});
@@ -210,7 +210,7 @@ function compareAmount(hodlersA, hodlersB) {
 
 function check_wallet(wallet_el, action){
 	clearTimeout(check_mist_timeout);
-	
+
 	var t_w = wallet_el.attr('id');
 	$('.modal__warning').html('Please login into your ' + wallet_el.val());
 
@@ -218,7 +218,7 @@ function check_wallet(wallet_el, action){
 		check_ledger();
 		return;
 	}
-	
+
 	if(t_w == WALLETS[1] || t_w.split('withdraw_')[1] == WALLETS[1] || t_w.split('check_')[1] == WALLETS[1]){
 		check_mist(action);
 		return;
@@ -239,53 +239,53 @@ function getDateTime(timestamp) {
 
 //-----
 function check_ledger(){
-	$('.withdraw .modal__warning').show(); 
-	$('.withdraw .modal').css('height', '300');
-		
+	$('.withdraw .modal__warning').show();
+	// $('.withdraw .modal').css('height', '300');
+
 	console.log("check_ledger()");
 }
 var check_mist_timeout;
 function check_mist(action){
 	if(!web3.currentProvider.isMetaMask || web3.eth.defaultAccount == undefined){
 		if(action == "hold"){
-			$('.send .modal__warning').show(); 
-			$('.send .modal__account').hide(); 
+			$('.send .modal__warning').show();
+			$('.send .modal__account').hide();
 		}
-		
+
 		if(action == "withdraw"){
-			$('.withdraw .modal__warning').show(); 
+			$('.withdraw .modal__warning').show();
 			$('.withdraw-bal-btn').hide();
 			$('.withdraw .modal__manually').hide();
-			
-			$('.withdraw .modal').css('height', '300');
+
+			// $('.withdraw .modal').css('height', '300');
 		}
-		
+
 		check_mist_timeout = setTimeout(function(){
 			check_mist(action);
 		}, 500);
 		return;
 	}
-	
+
 	if(action == "hold"){
-		$('.send .modal__warning').hide(); 
-		$('.send .modal__account').show(); 
+		$('.send .modal__warning').hide();
+		$('.send .modal__account').show();
 	}
-	
+
 	if(action == "withdraw"){
-		$('.withdraw .modal__warning').hide(); 
+		$('.withdraw .modal__warning').hide();
 		$('.withdraw .withdraw-bal-btn').hide();
 		$('.withdraw .withdraw-bal-btn-metamask').show();
 		$('.withdraw .modal__field').show();
-		$('.withdraw .modal__details').show(); 
-		
-		$('.withdraw .modal').css('height', '640');
+		$('.withdraw .modal__details').show();
+
+		// $('.withdraw .modal').css('height', '640');
 		$('#withdraw_address').val(web3.eth.defaultAccount);
 		var hodler = get_hodler_info(web3.eth.defaultAccount);
 		update_hodler_info(hodler);
 	}
-	
+
 	if(action == "check"){
-		$('.check .modal__warning').hide(); 
+		$('.check .modal__warning').hide();
 		$('.check .modal__manually').show();
 		$('#check_address').val(web3.eth.defaultAccount);
 	}

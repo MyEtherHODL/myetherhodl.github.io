@@ -38,6 +38,8 @@
       document.querySelector('.check .modal__form').classList.remove('none');
       document.querySelector('.check .modal__account').classList.add('none');
       document.querySelector('.modal-wrap.check').classList.add('auto-height');
+
+      setAutoHeight('.modal-wrap.check');
     });
 
     document.querySelector('.promo__btn.hold').addEventListener('click', function(e) {
@@ -46,32 +48,38 @@
       status.classList.add('none');
       status.classList.remove('success');
       document.querySelector('.modal__status-str').innerText ='Pending: ';
+
+      setAutoHeight('.modal-wrap.send');
     });
 
     document.querySelector('.promo__btn.withdraw').addEventListener('click', function(e) {
       document.querySelector('.modal-wrap.withdraw').classList.add('show');
       showPopup();
-      
+
       e.preventDefault();
       document.querySelector('.withdraw .modal__form').classList.add('none');
       document.querySelector('.withdraw .modal__account').classList.remove('none');
-      document.querySelector('.modal-wrap.withdraw').classList.remove('auto-height');
+
+      setAutoHeight('.modal-wrap.withdraw');
+      // document.querySelector('.modal-wrap.withdraw').classList.remove('auto-height');
     });
 
     document.querySelector('.withdraw-now-btn').addEventListener('click', function(e) {
       document.querySelector('.modal-wrap.withdraw').classList.add('show');
       body.classList.add('double');
-      
+
       e.preventDefault();
       document.querySelector('.withdraw .modal__form').classList.add('none');
       document.querySelector('.withdraw .modal__account').classList.remove('none');
-      document.querySelector('.modal-wrap.withdraw').classList.remove('auto-height');
+      setAutoHeight('.modal-wrap.withdraw');
+      // document.querySelector('.modal-wrap.withdraw').classList.remove('auto-height');
     });
 
     document.querySelector('.send-more-btn').addEventListener('click', function(e) {
       document.querySelector('.modal-wrap.send').classList.add('show');
       body.classList.add('double');
       document.querySelector('.send .modal__title').innerText = 'Send More Ethers';
+      setAutoHeight('.modal-wrap.send');
       //document.querySelector('#wallet_one_year + label').innerText = 'Current term';
     });
 
@@ -109,8 +117,9 @@
           manuallyField.classList.remove('none');
           status.classList.add('none');
           status.classList.remove('success');
-          document.querySelector('.modal-wrap.send').classList.remove('auto-height');
+          // document.querySelector('.modal-wrap.send').classList.remove('auto-height');
         }
+        setAutoHeight(e.currentTarget);
       });
     });
 
@@ -123,6 +132,7 @@
           document.querySelector('.withdraw .modal__mist').classList.add('none');
           document.querySelector('.withdraw .modal__manually').classList.remove('none');
         }
+        setAutoHeight(e.currentTarget);
       });
     });
 
@@ -135,6 +145,7 @@
           document.querySelector('.check .modal__mist').classList.add('none');
           document.querySelector('.check .modal__manually').classList.remove('none');
         }
+        setAutoHeight(e.currentTarget);
       });
     });
 
@@ -147,17 +158,24 @@
         var d = new Date(),
             dd = d.getDate() > 10 ? d.getDate() : ('0' + d.getDate()),
             mm = d.getMonth() + 1 > 10 ? d.getMonth() + 1 : ('0' + (d.getMonth() + 1)),
-            yyyy = d.getFullYear();
+            yyyy = d.getFullYear(),
+            text = 'Your eth will be returned in ',
+            tooltip = '';
 
         if (e.target.previousElementSibling.value == 1) {
           yyyy = +yyyy + 1;
+          text += '1 year';
         } else if (e.target.previousElementSibling.value == 2) {
           yyyy = +yyyy + 2;
+          text += '2 years';
         } else {
           yyyy = +yyyy + 3;
+          text += '3 years';
         }
 
-        e.target.nextElementSibling.querySelector('span').innerText = dd + '/' + mm + '/' + yyyy;
+        tooltip = text + ' ' + dd + '/' + mm + '/' + yyyy;
+
+        e.target.setAttribute('data-tooltip', tooltip);
       });
     });
 
@@ -182,6 +200,18 @@
         popup(e);
       }
     });
+
+    function setAutoHeight(e) {
+
+      // debugger
+
+      var container = $(e).find('.modal__content').length ? $(e).find('.modal__content') : $(e).closest('.modal__content');
+      if ((container.height() + 100) < $(window).height()) {
+        $(e).closest('.modal-wrap').addClass('auto-height');
+      } else if ((container.height() + 100) >= $(window).height()) {
+        $(e).closest('.modal-wrap').removeClass('auto-height');
+      }
+    }
 
     function showPopup() {
       curScroll = window.pageYOffset;
