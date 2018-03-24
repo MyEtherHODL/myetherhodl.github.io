@@ -978,7 +978,7 @@ button {
 .page-footer__help {
   margin-top: 10px;
 }
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .page-footer__help {
     float: right;
     margin-top: 0;
@@ -1041,7 +1041,7 @@ button {
   z-index: 1;
 }
 .modal-wrap.withdraw .modal {
-  max-height: 700px;
+  max-height: 725px;
 }
 .modal-wrap.withdraw .modal__field-note.warning {
   margin-top: 22px;
@@ -1101,7 +1101,6 @@ button {
 .modal {
   position: relative;
   max-width: 540px;
-  max-height: 500px;
   height: 100%;
   width: calc(100% - 40px);
   margin: 30px auto;
@@ -1114,6 +1113,7 @@ button {
 }
 @media (min-width: 768px) {
   .modal {
+    max-height: 500px;
     padding: 0 15px 0 20px;
   }
 }
@@ -1269,6 +1269,16 @@ button {
     letter-spacing: .48px;
   }
 }
+.modal__info-link {
+  margin-bottom: 4px;
+  text-decoration: underline;
+  color: #FFFFFF;
+}
+@media (min-width: 768px) {
+  .modal__info-link:hover {
+    text-decoration: none;
+  }
+}
 .modal__radio {
   display: inline-block;
   margin-bottom: 18px;
@@ -1388,10 +1398,13 @@ button {
   margin-top: 20px;
   margin-bottom: 28px;
 }
+.modal-wrap.withdraw .modal__details {
+  margin-bottom: 0;
+}
 .modal__details-common {
   display: inline-block;
   width: 180px;
-  margin-right: 20px;
+  margin-right: 18px;
 }
 .modal__details-period {
   display: inline-block;
@@ -1616,6 +1629,16 @@ button {
 .modal__btn.send-more-btn:before {
   content: 'Send more';
 }
+.modal__btn.withdraw-now-btn,
+.withdraw-bal-btn-metamask {
+  margin-top: 0;
+}
+@media (min-width: 768px) {
+  .modal__btn.withdraw-now-btn,
+  .withdraw-bal-btn-metamask {
+    margin-top: 20px;
+  }
+}
 .modal__status {
   font-size: 10px;
   line-height: 12px;
@@ -1780,9 +1803,12 @@ button {
   letter-spacing: .58px;
   font-weight: 500;
   font-style: italic;
-  position: absolute;
-  right: -214px;
-  top: -6px;
+  /*position: absolute;*/
+  position: fixed;
+  /*right: -214px;*/
+  /*top: -6px;*/
+  right: 0;
+  top: 0;
   width: 204px;
   padding: 5px;
   text-transform: uppercase;

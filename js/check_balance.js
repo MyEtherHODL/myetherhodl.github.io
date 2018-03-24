@@ -1,7 +1,7 @@
-/* ------------ CHECK MY BALANCE ------------ */ /* ------------ SEND MORE ------------ */ 
+/* ------------ CHECK MY BALANCE ------------ */ /* ------------ SEND MORE ------------ */
 $('.descr__link').filter('.check-balance-btn').click(function(){
 	$('.modal__radio.type').show();
-	$('#check_address').mask("******************************************", { placeholder: " " });	
+	$('#check_address').mask("******************************************", { placeholder: " " });
 	$('[name="check_wallet_type"]').each(function(){
 		if($(this).attr('checked'))
 			check_type_wallet_check($(this));
@@ -10,7 +10,7 @@ $('.descr__link').filter('.check-balance-btn').click(function(){
 
 $('[name="check_wallet_type"]').on('change', function(){
 	clearTimeout(check_mist_timeout);
-	
+
 	check_type_wallet_check($(this));
 });
 
@@ -33,19 +33,21 @@ $('.modal__btn').filter('.withdraw-now-btn').click(function(){
 	$('.withdraw .modal__status').hide();
 	$('.withdraw .modal__status').removeClass('success');
 	$('.withdraw .modal__status .modal__status-str').html('PENDING: ');
-	
+
 	if($('[name="check_wallet_type"]:checked').attr('id').split('check_')[1] == WALLETS[2]){
-		$('.withdraw .modal').css('height', '600');
+		// $('.withdraw .modal').css('height', '600');
 		$('.withdraw-bal-btn-metamask').hide();
 		$('.withdraw .modal__fee').show();
 		$('.withdraw .modal__manually').show();
 	} else {
-		$('.withdraw .modal').css('height', '480');
+		// $('.withdraw .modal').css('height', '480');
 		$('.withdraw-bal-btn-metamask').show();
+		$('#withdraw_address').parent().show();
 		$('.withdraw .modal__fee').hide();
 		$('.withdraw .modal__manually').hide();
+		$('.withdraw .modal__mist').hide();
 	}
-	
+
 	var address = $('#check_withdraw_address').val();
 	$('#withdraw_address').val(address);
 	$('#withdraw_address').attr('disabled', true);
@@ -58,7 +60,7 @@ $('.modal__btn').filter('.send-more-btn').click(function(){
 	show_form_hold_manually(true);
 	$('#wallet_manually').attr('checked', true);
 	$('#contract_address').html('').append( CONTRACT_ADDRESS );
-	
+
 	if($('[name="check_wallet_type"]:checked').attr('id').split('check_')[1] == WALLETS[2]){
 		$('.send .modal__manually').show();
 		$('.send .modal__account').hide();
@@ -68,8 +70,8 @@ $('.modal__btn').filter('.send-more-btn').click(function(){
 		$('.send .modal__account').show();
 		$('#eth_amount').val('');
 	}
-	
-	
+
+
 	// если текущий контракт на 2 года, то убираем checkbox = 2 years
 	// если текущий контракт на 3 года, то убираем checkbox = 3 years
 	var address = $('#check_withdraw_address').val();
@@ -77,7 +79,7 @@ $('.modal__btn').filter('.send-more-btn').click(function(){
 	$('[name="wallet_term"]').each(function(){
 		if(parseInt($(this).val()) < hodler.term){
 			$(this).parent().css('display', 'none');
-		} 
+		}
 		if(parseInt($(this).val()) > hodler.term){
 			$(this).parent().css('display', 'block');
 			var year = " year";
@@ -97,7 +99,7 @@ $('.modal__btn').filter('.send-more-btn').click(function(){
 		}
 	});
 });
-	
+
 function check_type_wallet_check(wallet_type_el){
 	if(wallet_type_el.attr('id').split('check_')[1] != WALLETS[2]){
 		show_form_check_manually(false)

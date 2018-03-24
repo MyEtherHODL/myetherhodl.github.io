@@ -16,14 +16,14 @@ $('.promo__btn').filter('.withdraw').click(function(){
 $('.withdraw-bal-btn').on('click', function(){
 	if($('#withdraw_address').val().length != 42){
 		$('#withdraw_address').fadeTo(100, 0.1).fadeTo(200, 1.0);
-		
-		$('.withdraw .modal').css('height', '450');
+
+		// $('.withdraw .modal').css('height', '450');
 
 		$('.withdraw .modal__details').hide();
 		$('.withdraw .modal__fee').hide();
 		$('.withdraw .modal__manually').hide();
 	} else {
-		$('.withdraw .modal').css('height', '600');
+		// $('.withdraw .modal').css('height', '600');
 
 		var hodler = get_hodler_info($('#withdraw_address').val());
 		update_hodler_info(hodler);
@@ -33,12 +33,12 @@ $('.withdraw-bal-btn').on('click', function(){
 		$('.withdraw .modal__manually').show();
 	}
 });
-	
+
 
 $('[name="withdraw_wallet_type"]').on('change', function(){
 	clearTimeout(check_mist_timeout);
-	
-	$('.withdraw .modal').css('height', '450');
+
+	// $('.withdraw .modal').css('height', '450');
 	check_type_wallet_withdraw($(this));
 });
 
@@ -55,15 +55,15 @@ function show_form_withdraw_manually(is_manually){
 	$('.withdraw .modal__details').hide();
 	$('.withdraw .modal__fee').hide();
 	$('.withdraw .modal__manually').hide();
-	
+
 	$('.withdraw .modal__status').hide();
 	$('.withdraw .modal__status').removeClass('success');
 	$('.withdraw .modal__status .modal__status-str').html('PENDING: ');
-	
+
 	if(is_manually){
 		$('.withdraw .modal__field').show();
 		$('.withdraw .withdraw-bal-btn').show();
-		$('.withdraw .modal').css('height', '450');
+		// $('.withdraw .modal').css('height', '450');
 		$('#withdraw_address').val('');
 		$('#withdraw_address').attr('disabled', false);
 	} else {
@@ -82,7 +82,7 @@ function update_hodler_info(hodler){
 	if(hodler != undefined){
 		balance = hodler.balance + ' ETH';
 		term = hodler.term + ' year';
-		if(term != 1) 
+		if(term != 1)
 			term += 's';
 		if(hodler.balance > 0){
 			date_start_holding = hodler.date_start_holding;
@@ -106,7 +106,7 @@ function withdraw(wallet_type, check_wallet_type){
 	$('.withdraw .modal__status').removeClass('success');
 	$('.withdraw .modal__status .modal__status-str').html('PENDING: ');
 	$('.withdraw .modal__status :nth-child(2)').html(web3.eth.defaultAccount);
-		
+
 	if(wallet_type == WALLETS[1] || check_wallet_type == WALLETS[1]){
 		web3.eth.sendTransaction({ 'from':web3.eth.defaultAccount, 'to': CONTRACT_ADDRESS, 'data': get_kessak256_data('party()'), 'value': 0 /*, gas:85000*/}, function(err, txHash){
 			if(err){
