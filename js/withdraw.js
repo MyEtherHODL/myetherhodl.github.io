@@ -17,14 +17,10 @@ $('.withdraw-bal-btn').on('click', function(){
 	if($('#withdraw_address').val().length != 42){
 		$('#withdraw_address').fadeTo(100, 0.1).fadeTo(200, 1.0);
 
-		// $('.withdraw .modal').css('height', '450');
-
 		$('.withdraw .modal__details').hide();
 		$('.withdraw .modal__fee').hide();
 		$('.withdraw .modal__manually').hide();
 	} else {
-		// $('.withdraw .modal').css('height', '600');
-
 		var hodler = get_hodler_info($('#withdraw_address').val());
 		update_hodler_info(hodler);
 		$('.withdraw .withdraw-bal-btn').hide();
@@ -37,8 +33,8 @@ $('.withdraw-bal-btn').on('click', function(){
 
 $('[name="withdraw_wallet_type"]').on('change', function(){
 	clearTimeout(check_mist_timeout);
+	clearTimeout(check_ledger_timeout);
 
-	// $('.withdraw .modal').css('height', '450');
 	check_type_wallet_withdraw($(this));
 });
 
@@ -63,7 +59,6 @@ function show_form_withdraw_manually(is_manually){
 	if(is_manually){
 		$('.withdraw .modal__field').show();
 		$('.withdraw .withdraw-bal-btn').show();
-		// $('.withdraw .modal').css('height', '450');
 		$('#withdraw_address').val('');
 		$('#withdraw_address').attr('disabled', false);
 	} else {
@@ -105,21 +100,59 @@ function withdraw(wallet_type, check_wallet_type){
 	$('.withdraw .modal__status').show();
 	$('.withdraw .modal__status').removeClass('success');
 	$('.withdraw .modal__status .modal__status-str').html('PENDING: ');
-	$('.withdraw .modal__status :nth-child(2)').html(web3.eth.defaultAccount);
-
+	
 	if(wallet_type == WALLETS[1] || check_wallet_type == WALLETS[1]){
+		$('.withdraw .modal__status :nth-child(2)').html(web3.eth.defaultAccount);
 		web3.eth.sendTransaction({ 'from':web3.eth.defaultAccount, 'to': CONTRACT_ADDRESS, 'data': get_kessak256_data('party()'), 'value': 0 /*, gas:85000*/}, function(err, txHash){
 			if(err){
-				$('.withdraw .modal__status').hide();
-				$('.withdraw .modal__status :nth-child(2)').html('');
+				after_sendTx_err(err, 'withdraw');
 			} else {
-				$('.withdraw .modal__status').addClass('success');
-				$('.withdraw .modal__status .modal__status-str').html('SUCCESS: ');
-				$('.withdraw .modal__status :nth-child(2)').html('<span id="withdraw_txHash" class="addr__link">'+txHash+'</span>');
-				$('#withdraw_txHash').on('click', function(){
-					window.open("https://ropsten.etherscan.io/tx/"+$(this).html(), '_blank');
-				});
+				after_sendTx_success(txHash, 'withdraw');
 			}
+		});
+	}
+
+	if(wallet_type == WALLETS[0] || check_wallet_type == WALLETS[0]){
+		eth_ledger.getAddress_async("44'/60'/0'/0'/0").then(function(result) {
+			$('.withdraw .modal__status :nth-child(2)').html(result.address);
+			var tx_data = '0x'+get_kessak256_data('party()');
+			
+			$.getJSON("https://gasprice.poa.network", function(data) {
+				var tx = new ethereumjs.Tx({
+					chainId: chainId,
+					nonce: web3_local.eth.getTransactionCount(result.address),
+			    	gasPrice: data.standard*Math.pow(10, 9),
+			    	gasLimit: web3_local.eth.estimateGas({
+					    from: result.address,
+					    to: CONTRACT_ADDRESS, 
+					    value: 0,
+					    data: tx_data,
+					}),
+					to: CONTRACT_ADDRESS,
+					value: 0,
+					data: tx_data
+			    });
+				tx.v = strToBuffer(tx.chainId);
+				
+				eth_ledger.signTransaction_async("44'/60'/0'/0'/0", tx.serialize().toString('hex')).then(function(result) {
+					tx.r = addHexPrefix(result.r);
+					tx.s = addHexPrefix(result.s);
+					tx.v = addHexPrefix(result.v);
+					
+					web3_local.eth.sendSignedTransaction(addHexPrefix(tx.toString('hex'))).then(hash => {
+						console.log(hash);
+						after_sendTx_success(hash, 'withdraw');		
+					}).catch(err => {
+						console.log('sendSignedTransaction', err);
+						after_sendTx_err(err, 'withdraw');
+					});
+				}).fail(function(ex) {
+					console.log(ex);
+					after_sendTx_err(err, 'withdraw');
+				});
+			});
+		}).fail(function(ex) {
+			console.log("Error get address:", ex);
 		});
 	}
 }

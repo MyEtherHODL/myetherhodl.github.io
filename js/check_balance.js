@@ -10,6 +10,7 @@ $('.descr__link').filter('.check-balance-btn').click(function(){
 
 $('[name="check_wallet_type"]').on('change', function(){
 	clearTimeout(check_mist_timeout);
+	clearTimeout(check_ledger_timeout);
 
 	check_type_wallet_check($(this));
 });
@@ -35,12 +36,10 @@ $('.modal__btn').filter('.withdraw-now-btn').click(function(){
 	$('.withdraw .modal__status .modal__status-str').html('PENDING: ');
 
 	if($('[name="check_wallet_type"]:checked').attr('id').split('check_')[1] == WALLETS[2]){
-		// $('.withdraw .modal').css('height', '600');
 		$('.withdraw-bal-btn-metamask').hide();
 		$('.withdraw .modal__fee').show();
 		$('.withdraw .modal__manually').show();
 	} else {
-		// $('.withdraw .modal').css('height', '480');
 		$('.withdraw-bal-btn-metamask').show();
 		$('#withdraw_address').parent().show();
 		$('.withdraw .modal__fee').hide();

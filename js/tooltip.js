@@ -1,7 +1,6 @@
 function init_tooltip(){
   $(function(){
         $("[data-tooltip]").mouseover(function (eventObject) {
-            // console.log(eventObject.pageY)
             $data_tooltip = $(this).attr("data-tooltip");
             $("#tooltip").html($data_tooltip)
                 .css({

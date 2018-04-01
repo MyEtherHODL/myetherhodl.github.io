@@ -2,7 +2,9 @@ const CONTRACT_ADDRESS = '0x4222Ab28A07E918D9F82c2B3aCa0a42102184D46';
 const CREATE_CONTRACT_BLOCK = 2757685;
 const ABI = [{"constant":false,"inputs":[{"name":"hodler","type":"address"}],"name":"partyTo","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"hodlersCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"index","type":"uint256"}],"name":"get2","outputs":[{"name":"hodler1","type":"address"},{"name":"balance1","type":"uint256"},{"name":"lockedUntil1","type":"uint256"},{"name":"lockedFor1","type":"uint256"},{"name":"hodler2","type":"address"},{"name":"balance2","type":"uint256"},{"name":"lockedUntil2","type":"uint256"},{"name":"lockedFor2","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"party","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"hodlFor3y","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"hodlFor2y","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"hodlFor1y","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"indexOfHodler","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"hodlers","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"lockedUntil","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token","type":"address"},{"name":"loser","type":"address"}],"name":"recoverLost","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"index","type":"uint256"}],"name":"get1","outputs":[{"name":"hodler1","type":"address"},{"name":"balance1","type":"uint256"},{"name":"lockedUntil1","type":"uint256"},{"name":"lockedFor1","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"index","type":"uint256"}],"name":"get3","outputs":[{"name":"hodler1","type":"address"},{"name":"balance1","type":"uint256"},{"name":"lockedUntil1","type":"uint256"},{"name":"lockedFor1","type":"uint256"},{"name":"hodler2","type":"address"},{"name":"balance2","type":"uint256"},{"name":"lockedUntil2","type":"uint256"},{"name":"lockedFor2","type":"uint256"},{"name":"hodler3","type":"address"},{"name":"balance3","type":"uint256"},{"name":"lockedUntil3","type":"uint256"},{"name":"lockedFor3","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"lockedFor","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hodler","type":"address"},{"indexed":true,"name":"amount","type":"uint256"},{"indexed":false,"name":"untilTime","type":"uint256"},{"indexed":false,"name":"duration","type":"uint256"}],"name":"Hodl","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hodler","type":"address"},{"indexed":true,"name":"amount","type":"uint256"},{"indexed":false,"name":"duration","type":"uint256"}],"name":"Party","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hodler","type":"address"},{"indexed":true,"name":"amount","type":"uint256"},{"indexed":false,"name":"elapsed","type":"uint256"}],"name":"Fee","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"previousOwner","type":"address"},{"indexed":true,"name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"}];
 var ROPSTEN = 1;
+var chainId = 1;
 ROPSTEN ? ROPSTEN = "ropsten." : ROPSTEN = "";
+ROPSTEN ? chainId = 3 : chainId = 1;
 
 const kessak256 = {
     "70a08231": "balanceOf(address)",
@@ -210,17 +212,18 @@ function compareAmount(hodlersA, hodlersB) {
 
 function check_wallet(wallet_el, action){
 	clearTimeout(check_mist_timeout);
-
+	clearTimeout(check_ledger_timeout);
+	
 	var t_w = wallet_el.attr('id');
 	$('.modal__warning').html('Please login into your ' + wallet_el.val());
-
+	
 	if( t_w == WALLETS[0] || t_w.split('withdraw_')[1] == WALLETS[0] || t_w.split('check_')[1] == WALLETS[0]){
-		check_ledger();
+		check_mist_ledger(action, "ledger");
 		return;
 	}
 
 	if(t_w == WALLETS[1] || t_w.split('withdraw_')[1] == WALLETS[1] || t_w.split('check_')[1] == WALLETS[1]){
-		check_mist(action);
+		check_mist_ledger(action, "mist");
 		return;
 	}
 }
@@ -238,34 +241,72 @@ function getDateTime(timestamp) {
 }
 
 //-----
-function check_ledger(){
-	$('.withdraw .modal__warning').show();
-	// $('.withdraw .modal').css('height', '300');
-
-	console.log("check_ledger()");
-}
 var check_mist_timeout;
-function check_mist(action){
-	if(!web3.currentProvider.isMetaMask || web3.eth.defaultAccount == undefined){
-		if(action == "hold"){
-			$('.send .modal__warning').show();
-			$('.send .modal__account').hide();
+var check_ledger_timeout;
+var eth_ledger;
+function check_mist_ledger(action, type){
+	if(type == "mist"){
+		if(!web3.currentProvider.isMetaMask || web3.eth.defaultAccount == undefined){
+			not_mist_ledger(action, type);
+		} else {
+			is_mist_ledger(action, web3.eth.defaultAccount);
 		}
-
-		if(action == "withdraw"){
-			$('.withdraw .modal__warning').show();
-			$('.withdraw-bal-btn').hide();
-			$('.withdraw .modal__manually').hide();
-
-			// $('.withdraw .modal').css('height', '300');
-		}
-
-		check_mist_timeout = setTimeout(function(){
-			check_mist(action);
-		}, 500);
 		return;
 	}
 
+	if(type == "ledger"){
+		comm = ledger.comm_u2f;
+		comm.create_async(0, true).then(function(comm) {
+			//comm.timeoutSeconds = 1;
+			
+			eth_ledger = new ledger.eth(comm);
+			eth_ledger.getAppConfiguration_async().then(function(result) {
+				eth_ledger.getAddress_async("44'/60'/0'/0'/0").then(function(result) {
+					console.log(result);
+					is_mist_ledger(action, result.address);
+				}).fail(function(ex) {
+					not_mist_ledger(action, type); 
+				});
+			}).fail(function(ex) {
+				not_mist_ledger(action, type);
+			});
+		}).fail(function(ex) {
+			not_mist_ledger(action, type);
+		});
+		return;
+	}
+}
+
+function not_mist_ledger(action, type, check_timeout){
+	if(type == "ledger" && $('[name="wallet_type"]:checked').attr('id') != WALLETS[0]){
+		//ledger checkout finished, but user has clicked another wallet_type
+		return;
+	} 
+	
+	if(action == "hold"){
+		$('.send .modal__warning').show();
+		$('.send .modal__account').hide();
+	}
+
+	if(action == "withdraw"){
+		$('.withdraw .modal__warning').show();
+		$('.withdraw-bal-btn').hide();
+		$('.withdraw .modal__manually').hide();
+	}
+
+	if(type == "mist"){
+		check_mist_timeout = setTimeout(function(){
+			check_mist_ledger(action, type);
+		}, 500);	
+	}
+	if(type == "ledger"){
+		check_ledger_timeout = setTimeout(function(){
+			check_mist_ledger(action, type);
+		}, 500);	
+	}
+}
+
+function is_mist_ledger(action, address){
 	if(action == "hold"){
 		$('.send .modal__warning').hide();
 		$('.send .modal__account').show();
@@ -278,15 +319,14 @@ function check_mist(action){
 		$('.withdraw .modal__field').show();
 		$('.withdraw .modal__details').show();
 
-		// $('.withdraw .modal').css('height', '640');
-		$('#withdraw_address').val(web3.eth.defaultAccount);
-		var hodler = get_hodler_info(web3.eth.defaultAccount);
+		$('#withdraw_address').val(address);
+		var hodler = get_hodler_info(address);
 		update_hodler_info(hodler);
 	}
 
 	if(action == "check"){
 		$('.check .modal__warning').hide();
 		$('.check .modal__manually').show();
-		$('#check_address').val(web3.eth.defaultAccount);
+		$('#check_address').val(address);
 	}
 }
