@@ -4,7 +4,7 @@ function init_tooltip(){
             $data_tooltip = $(this).attr("data-tooltip");
             $("#tooltip").html($data_tooltip)
                 .css({
-                  "top" : eventObject.currentTarget.getBoundingClientRect().top - $("#tooltip").height(),
+                  "top" : eventObject.currentTarget.getBoundingClientRect().top + $(eventObject.currentTarget).outerHeight()/2 - $('#tooltip').outerHeight()/2 ,
                   "left" : eventObject.currentTarget.getBoundingClientRect().right + 10
                 })
                 .show();
