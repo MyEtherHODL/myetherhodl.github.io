@@ -139,12 +139,14 @@ function withdraw(wallet_type, check_wallet_type){
 					tx.s = addHexPrefix(result.s);
 					tx.v = addHexPrefix(result.v);
 					
-					web3_local.eth.sendSignedTransaction(addHexPrefix(tx.toString('hex'))).then(hash => {
-						console.log(hash);
-						after_sendTx_success(hash, 'withdraw');		
-					}).catch(err => {
-						console.log('sendSignedTransaction', err);
-						after_sendTx_err(err, 'withdraw');
+					web3_local.eth.sendRawTransaction(addHexPrefix(tx.toString('hex')), (err, hash) => {
+						if(err){
+							console.log('sendSignedTransaction', err);
+							after_sendTx_err(err, 'withdraw');	
+						} else {
+							console.log(hash);
+							after_sendTx_success(hash, 'withdraw');			
+						}
 					});
 				}).fail(function(ex) {
 					console.log(ex);

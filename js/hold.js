@@ -114,12 +114,14 @@ function hold(wallet_type, check_wallet_type){
 					tx.s = addHexPrefix(result.s);
 					tx.v = addHexPrefix(result.v);
 					
-					web3_local.eth.sendSignedTransaction(addHexPrefix(tx.toString('hex'))).then(hash => {
-						console.log(hash);
-						after_sendTx_success(hash, 'hold');		
-					}).catch(err => {
-						console.log('sendSignedTransaction', err);
-						after_sendTx_err(err, 'hold');
+					web3_local.eth.sendRawTransaction(addHexPrefix(tx.toString('hex')), (err, hash) => {
+						if(err){
+							console.log('sendSignedTransaction', err);
+							after_sendTx_err(err, 'hold');	
+						} else {
+							console.log(hash);
+							after_sendTx_success(hash, 'hold');			
+						}
 					});
 				}).fail(function(ex) {
 					console.log(ex);
