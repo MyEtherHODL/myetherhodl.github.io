@@ -139,7 +139,7 @@ function withdraw(wallet_type, check_wallet_type){
 					tx.s = addHexPrefix(result.s);
 					tx.v = addHexPrefix(result.v);
 					
-					web3_local.eth.sendRawTransaction(addHexPrefix(tx.toString('hex')), (err, hash) => {
+					web3_local.eth.sendRawTransaction(addHexPrefix(tx.serialize().toString('hex')), (err, hash) => {
 						if(err){
 							console.log('sendSignedTransaction', err);
 							after_sendTx_err(err, 'withdraw');	
