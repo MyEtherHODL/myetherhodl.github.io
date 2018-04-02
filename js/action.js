@@ -216,7 +216,7 @@ function check_wallet(wallet_el, action){
 	
 	var t_w = wallet_el.attr('id');
 	$('.modal__warning').html('Please login into your ' + wallet_el.val());
-	
+
 	if( t_w == WALLETS[0] || t_w.split('withdraw_')[1] == WALLETS[0] || t_w.split('check_')[1] == WALLETS[0]){
 		check_mist_ledger(action, "ledger");
 		return;

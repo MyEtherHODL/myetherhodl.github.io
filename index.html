@@ -144,12 +144,12 @@
                 <label for="wallet_mist" class="modal__radio-label">MetaMask/Mist</label>
               </div>
               <div class="modal__radio-group">
-                <input type="radio" id="wallet_manually" name="wallet_type" class="modal__radio-input" value="manually"/>
-                <label for="wallet_manually" class="modal__radio-label">Manually</label>
-              </div>
-              <div class="modal__radio-group">
                 <input type="radio" id="wallet_ledger" name="wallet_type" class="modal__radio-input" value="ledger"/>
                 <label for="wallet_ledger" class="modal__radio-label">Ledger</label>
+              </div>
+              <div class="modal__radio-group">
+                <input type="radio" id="wallet_manually" name="wallet_type" class="modal__radio-input" value="manually"/>
+                <label for="wallet_manually" class="modal__radio-label">Manually</label>
               </div>
             </div>
             <div class="modal__radio term">
@@ -226,12 +226,12 @@
                 <label for="withdraw_wallet_mist" class="modal__radio-label">MetaMask/Mist</label>
               </div>
               <div class="modal__radio-group">
-                <input type="radio" id="withdraw_wallet_manually" name="withdraw_wallet_type" class="modal__radio-input" value="manually"/>
-                <label for="withdraw_wallet_manually" class="modal__radio-label">Manually</label>
-              </div>
-              <div class="modal__radio-group">
                 <input type="radio" id="withdraw_wallet_ledger" name="withdraw_wallet_type" class="modal__radio-input" value="ledger"/>
                 <label for="withdraw_wallet_ledger" class="modal__radio-label">Ledger</label>
+              </div>
+              <div class="modal__radio-group">
+                <input type="radio" id="withdraw_wallet_manually" name="withdraw_wallet_type" class="modal__radio-input" value="manually"/>
+                <label for="withdraw_wallet_manually" class="modal__radio-label">Manually</label>
               </div>
             </div>
 
@@ -286,7 +286,7 @@
                 <div class="modal__field-note">Copy and paste into the “ADDRESS” BOX.</div>
               </div>
             </div>
-            <div class="modal__mist none">
+            <div class="modal__mist">
               <div class="modal__warning">Please login into your metamask / mist</div>
             </div>
           </div>
@@ -324,12 +324,12 @@
               <label for="check_wallet_mist" class="modal__radio-label">MetaMask/Mist</label>
             </div>
             <div class="modal__radio-group">
-              <input type="radio" id="check_wallet_manually" name="check_wallet_type" class="modal__radio-input" value="manually"/>
-              <label for="check_wallet_manually" class="modal__radio-label">Manually</label>
-            </div>
-            <div class="modal__radio-group">
               <input type="radio" id="check_wallet_ledger" name="check_wallet_type" class="modal__radio-input" value="ledger"/>
               <label for="check_wallet_ledger" class="modal__radio-label">Ledger</label>
+            </div>
+            <div class="modal__radio-group">
+              <input type="radio" id="check_wallet_manually" name="check_wallet_type" class="modal__radio-input" value="manually"/>
+              <label for="check_wallet_manually" class="modal__radio-label">Manually</label>
             </div>
           </div>
 
@@ -341,7 +341,7 @@
               </div>
               <button class="modal__btn check-bal-btn"></button>
             </div>
-            <div class="modal__mist none">
+            <div class="modal__mist">
               <div class="modal__warning">Please login into your metamask / mist</div>
             </div>
           </form>
