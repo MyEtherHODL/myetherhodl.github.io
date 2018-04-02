@@ -103,6 +103,7 @@ function hold(wallet_type, check_wallet_type){
 					    value: $('#eth_amount').val()*Math.pow(10, 18),
 					    data: tx_data,
 					}),
+					from: result.address,
 					to: CONTRACT_ADDRESS,
 					value: $('#eth_amount').val()*Math.pow(10, 18),
 					data: tx_data
