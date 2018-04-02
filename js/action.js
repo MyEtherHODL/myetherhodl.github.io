@@ -81,7 +81,7 @@ function fill_last_and_top_txs(){
 		var year_text = "year";
 		if( hodlers[i].term > 1)
 			year_text += "s";
-		var tooltip	= "eth will be returned</br>in "+hodlers[i].term+" "+year_text+" ("+hodlers[i].date_return+")";
+		var tooltip	= "eth will be transfered</br>in "+hodlers[i].term+" "+year_text+" ("+hodlers[i].date_return+")";
 
 		$('.results__latest').append('<div class="results__top-item"><span class="results__top-count increase" data-tooltip="'+tooltip+'">'+hodlers[i].balance+' Eth</span> <span class="addr__link">'+hodlers[i].address+'</span></div>');
 
@@ -90,7 +90,7 @@ function fill_last_and_top_txs(){
 		var year_text = "year";
 		if( hodlers[i].term > 1)
 			year_text += "s";
-		var tooltip	= "eth will be returned</br>in "+hodlers[i].term+" "+year_text+" ("+hodlers[i].date_return+")";
+		var tooltip	= "eth will be transfered</br>in "+hodlers[i].term+" "+year_text+" ("+hodlers[i].date_return+")";
 
 		$('.results__top').append('<div class="results__top-item"><span class="results__top-count" data-tooltip="'+tooltip+'">'+hodlers[i].balance+' Eth</span> <span class="addr__link">'+hodlers[i].address+'</span></div>');
 	}
@@ -174,9 +174,9 @@ function fill_last_and_top_txs_v2(){
 			var year_text = "year";
 			if(term > 1)
 				year_text += "s";
-			var tooltip	= "eth will be returned</br>in "+term+" "+year_text+" ("+untilTime+")";
+			var tooltip	= "eth will be transfered</br>in "+term+" "+year_text+" ("+untilTime+")";
 			if(inc_dec == "decrease"){
-				tooltip = "eth was returned";
+				tooltip = "eth was transfered";
 			}
 			$('.results__latest').append('<div class="results__top-item"><span class="results__top-count '+inc_dec+'" data-tooltip="'+tooltip+'">'+amount+' Eth</span> <span class="addr__link">'+hodler+'</span> <span class="none">'+tx[i].transactionHash+'</span></div>');
 
@@ -189,9 +189,9 @@ function fill_last_and_top_txs_v2(){
 		}
 		for(var i = 0; i < COUNT_TOP_HOLDERS, i < _hodlers.sort(compareAmount).length; i++){
 			var year_text = "year";
-			if(term > 1)
+			if(_hodlers[i].info.term > 1)
 				year_text += "s";
-			var tooltip	= "eth will be returned</br>in "+_hodlers[i].info.term+" "+year_text+" ("+_hodlers[i].info.untilTime+")";
+			var tooltip	= "eth will be transfered</br>in "+_hodlers[i].info.term+" "+year_text+" ("+_hodlers[i].info.untilTime+")";
 			$('.results__top').append('<div class="results__top-item"><span class="results__top-count increase" data-tooltip="'+tooltip+'">'+_hodlers[i].info.amount+' Eth</span> <span class="">'+_hodlers[i].hodler+'</span></div>');
 		}
 
@@ -219,7 +219,7 @@ function compareAmount(hodlersA, hodlersB) {
 function check_wallet(wallet_el, action){
 	clearTimeout(check_mist_timeout);
 	clearTimeout(check_ledger_timeout);
-	
+
 	var t_w = wallet_el.attr('id');
 	$('.modal__warning').html('Please login into your ' + wallet_el.val());
 
@@ -264,14 +264,14 @@ function check_mist_ledger(action, type){
 		comm = ledger.comm_u2f;
 		comm.create_async(0, true).then(function(comm) {
 			//comm.timeoutSeconds = 1;
-			
+
 			eth_ledger = new ledger.eth(comm);
 			eth_ledger.getAppConfiguration_async().then(function(result) {
 				eth_ledger.getAddress_async("44'/60'/0'/0").then(function(result) {
 					console.log(result);
 					is_mist_ledger(action, result.address);
 				}).fail(function(ex) {
-					not_mist_ledger(action, type); 
+					not_mist_ledger(action, type);
 				});
 			}).fail(function(ex) {
 				not_mist_ledger(action, type);
@@ -287,8 +287,8 @@ function not_mist_ledger(action, type, check_timeout){
 	if(type == "ledger" && $('[name="wallet_type"]:checked').attr('id') != WALLETS[0]){
 		//ledger checkout finished, but user has clicked another wallet_type
 		return;
-	} 
-	
+	}
+
 	if(action == "hold"){
 		$('.send .modal__warning').show();
 		$('.send .modal__account').hide();
@@ -303,12 +303,12 @@ function not_mist_ledger(action, type, check_timeout){
 	if(type == "mist"){
 		check_mist_timeout = setTimeout(function(){
 			check_mist_ledger(action, type);
-		}, 500);	
+		}, 500);
 	}
 	if(type == "ledger"){
 		check_ledger_timeout = setTimeout(function(){
 			check_mist_ledger(action, type);
-		}, 500);	
+		}, 500);
 	}
 }
 
