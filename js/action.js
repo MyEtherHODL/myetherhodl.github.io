@@ -261,7 +261,7 @@ function check_mist_ledger(action, type){
 			
 			eth_ledger = new ledger.eth(comm);
 			eth_ledger.getAppConfiguration_async().then(function(result) {
-				eth_ledger.getAddress_async("44'/60'/0'/0'/0").then(function(result) {
+				eth_ledger.getAddress_async("44'/60'/0'/0").then(function(result) {
 					console.log(result);
 					is_mist_ledger(action, result.address);
 				}).fail(function(ex) {
