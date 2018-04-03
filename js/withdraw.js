@@ -135,7 +135,7 @@ function withdraw(wallet_type, check_wallet_type){
 			    });
 				tx.v = strToBuffer(tx.chainId);
 				
-				eth_ledger.signTransaction_async("44'/60'/0'/0'/0", tx.serialize().toString('hex')).then(function(result) {
+				eth_ledger.signTransaction_async("44'/60'/0'/0", tx.serialize().toString('hex')).then(function(result) {
 					tx.r = addHexPrefix(result.r);
 					tx.s = addHexPrefix(result.s);
 					tx.v = addHexPrefix(result.v);
