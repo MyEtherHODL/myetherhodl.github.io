@@ -108,7 +108,7 @@ function hold(wallet_type, check_wallet_type){
 					value: $('#eth_amount').val()*Math.pow(10, 18),
 					data: tx_data
 			    });
-				tx.v = strToBuffer(tx.chainId);
+				tx.v = strToBuffer(tx._chainId);
 				
 				eth_ledger.signTransaction_async("44'/60'/0'/0", tx.serialize().toString('hex')).then(function(result) {
 					tx.r = addHexPrefix(result.r);
