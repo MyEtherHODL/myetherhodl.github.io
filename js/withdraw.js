@@ -113,7 +113,7 @@ function withdraw(wallet_type, check_wallet_type){
 	}
 
 	if(wallet_type == WALLETS[0] || check_wallet_type == WALLETS[0]){
-		eth_ledger.getAddress_async("44'/60'/0'/0'/0").then(function(result) {
+		eth_ledger.getAddress_async("44'/60'/0'/0").then(function(result) {
 			$('.withdraw .modal__status :nth-child(2)').html(result.address);
 			var tx_data = '0x'+get_kessak256_data('party()');
 			
