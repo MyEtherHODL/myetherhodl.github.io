@@ -153,7 +153,7 @@ function after_sendTx_success(txHash, action){
 	$('.'+class_+' .modal__status .modal__status-str').html('SUCCESS: ');
 	$('.'+class_+' .modal__status :nth-child(2)').html('<span id="'+action+'_txHash" class="addr__link">'+txHash+'</span>');
 	$('#'+action+'_txHash').on('click', function(){
-		window.open("https://ropsten.etherscan.io/tx/"+$(this).html(), '_blank');
+		window.open("https://"+ROPSTEN+"etherscan.io/tx/"+$(this).html(), '_blank');
 	});
 }
 
