@@ -37,9 +37,19 @@ if(!web3_local.net.listening){
 
 load_transactions();
 
-$('.ticker__link').click(function(){
-	window.open("https://"+ROPSTEN+"etherscan.io/tx/"+$('#ticker_tx').html(), '_blank');
-});
+if ($('.ticker__inner').hasClass('str_wrap')) {
+	add_link_url_to_ticker()
+} else {
+	setTimeout(() => {
+	  add_link_url_to_ticker()
+	}, 500)
+}
+
+function add_link_url_to_ticker() {
+	$('.ticker__link').click(function(){
+		window.open("https://"+ROPSTEN+"etherscan.io/tx/"+$('#ticker_tx').html(), '_blank');
+	});
+}
 
 $('#contract_source').click(function(){
 	window.open("https://etherscan.io/address/0xcc277a6925fdc13b6441c0bc40633f481b0a5de4#code", '_blank');
@@ -324,6 +334,7 @@ function is_mist_ledger(action, address){
 		$('.withdraw .withdraw-bal-btn-metamask').show();
 		$('.withdraw .modal__field').show();
 		$('.withdraw .modal__details').show();
+		$('.withdraw .modal__fee').show();
 
 		$('#withdraw_address').val(address);
 		var hodler = get_hodler_info(address);

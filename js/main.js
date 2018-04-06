@@ -42,6 +42,10 @@
       setAutoHeight('.modal-wrap.check');
     });
 
+    document.querySelector('.withdraw-bal-btn').addEventListener('click', function(e) {
+      setAutoHeight('.modal-wrap.withdraw');
+    });
+
     document.querySelector('.promo__btn.hold').addEventListener('click', function(e) {
       document.querySelector('.modal-wrap.send').classList.add('show');
       showPopup();

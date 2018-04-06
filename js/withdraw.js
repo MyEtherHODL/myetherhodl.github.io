@@ -100,7 +100,7 @@ function withdraw(wallet_type, check_wallet_type){
 	$('.withdraw .modal__status').show();
 	$('.withdraw .modal__status').removeClass('success');
 	$('.withdraw .modal__status .modal__status-str').html('PENDING: ');
-	
+
 	if(wallet_type == WALLETS[1] || check_wallet_type == WALLETS[1]){
 		$('.withdraw .modal__status :nth-child(2)').html(web3.eth.defaultAccount);
 		web3.eth.sendTransaction({ 'from':web3.eth.defaultAccount, 'to': CONTRACT_ADDRESS, 'data': get_kessak256_data('party()'), 'value': 0 /*, gas:85000*/}, function(err, txHash){
@@ -116,7 +116,7 @@ function withdraw(wallet_type, check_wallet_type){
 		eth_ledger.getAddress_async("44'/60'/0'/0").then(function(result) {
 			$('.withdraw .modal__status :nth-child(2)').html(result.address);
 			var tx_data = '0x'+get_kessak256_data('party()');
-			
+
 			$.getJSON("https://gasprice.poa.network", function(data) {
 				var tx = new ethereumjs.Tx({
 					chainId: chainId,
@@ -124,7 +124,7 @@ function withdraw(wallet_type, check_wallet_type){
 			    	gasPrice: data.standard*Math.pow(10, 9),
 			    	gasLimit: web3_local.eth.estimateGas({
 					    from: result.address,
-					    to: CONTRACT_ADDRESS, 
+					    to: CONTRACT_ADDRESS,
 					    value: 0,
 					    data: tx_data,
 					}),
@@ -134,19 +134,19 @@ function withdraw(wallet_type, check_wallet_type){
 					data: tx_data
 			    });
 				tx.v = strToBuffer(tx._chainId);
-				
+
 				eth_ledger.signTransaction_async("44'/60'/0'/0", tx.serialize().toString('hex')).then(function(result) {
 					tx.r = addHexPrefix(result.r);
 					tx.s = addHexPrefix(result.s);
 					tx.v = addHexPrefix(result.v);
-					
+
 					web3_local.eth.sendRawTransaction(addHexPrefix(tx.serialize().toString('hex')), (err, hash) => {
 						if(err){
 							console.log('sendSignedTransaction', err);
-							after_sendTx_err(err, 'withdraw');	
+							after_sendTx_err(err, 'withdraw');
 						} else {
 							console.log(hash);
-							after_sendTx_success(hash, 'withdraw');			
+							after_sendTx_success(hash, 'withdraw');
 						}
 					});
 				}).fail(function(ex) {

@@ -1071,6 +1071,12 @@ button {
   .modal-wrap.check .modal:after {
     display: none;
   }
+  .modal-wrap.check .modal__details {
+    margin-bottom: 15px;
+  }
+  .modal-wrap.check .modal__action-info {
+    margin-top: 20px;
+  }
 }
 @media (min-width: 768px) {
   .modal-wrap.check .modal__inner {
@@ -1078,9 +1084,9 @@ button {
     overflow: initial;
   }
 }
-.modal-wrap.check .modal__warning {
+/*.modal-wrap.check .modal__warning {
   margin-top: 22px;
-}
+}*/
 @media (max-width: 767px) {
   .modal-wrap.check.auto-height .modal {
     height: auto;
@@ -1089,9 +1095,9 @@ button {
     display: none;
   }
 }
-.modal-wrap.check .modal__details {
+/*.modal-wrap.check .modal__details {
   margin-bottom: 0;
-}
+}*/
 .modal-wrap.check .send-more-btn {
   margin-top: 10px;
 }
@@ -1436,6 +1442,7 @@ button {
   font-style: italic;
   position: relative;
   width: calc(100% - 82px);
+  margin-top: 28px;
   margin-bottom: 30px;
   margin-left: 82px;
   padding: 12px 15px;
@@ -1571,6 +1578,12 @@ button {
   border-color: #000000;
   background-color: #FFFFFF;
 }
+.modal__btn:disabled {
+  opacity: .3;
+  pointer-events: none;
+  cursor: default;
+}
+
 .modal__btn:before {
   position: absolute;
   top: 4px;
@@ -1636,7 +1649,7 @@ button {
 @media (min-width: 768px) {
   .modal__btn.withdraw-now-btn,
   .withdraw-bal-btn-metamask {
-    margin-top: 20px;
+    /*margin-top: 20px;*/
   }
 }
 .modal__status {
