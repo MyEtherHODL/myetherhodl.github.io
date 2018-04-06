@@ -276,6 +276,9 @@ function check_mist_ledger(action, type){
 			//comm.timeoutSeconds = 1;
 
 			eth_ledger = new ledger.eth(comm);
+			$('.send .modal__warning').show();
+			$('.withdraw .modal__warning').show();
+			$('.check .modal__warning').show();
 			eth_ledger.getAppConfiguration_async().then(function(result) {
 				eth_ledger.getAddress_async("44'/60'/0'/0").then(function(result) {
 					console.log(result);
