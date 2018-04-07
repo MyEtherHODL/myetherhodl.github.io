@@ -42,7 +42,8 @@ $('.modal__btn').filter('.withdraw-now-btn').click(function(){
 	} else {
 		$('.withdraw-bal-btn-metamask').show();
 		$('#withdraw_address').parent().show();
-		$('.withdraw .modal__fee').hide();
+		// $('.withdraw .modal__fee').hide();
+		$('.withdraw .modal__fee').show();
 		$('.withdraw .modal__manually').hide();
 		$('.withdraw .modal__mist').hide();
 	}
