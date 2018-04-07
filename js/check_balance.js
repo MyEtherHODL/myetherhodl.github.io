@@ -29,6 +29,8 @@ $('.check-bal-btn').on('click', function(){
 });
 
 $('.modal__btn').filter('.withdraw-now-btn').click(function(){
+	$('.withdraw .withdraw-bal-btn-metamask').prop('disabled', false);
+	
 	$('.withdraw-bal-btn').hide();
 	$('.withdraw .modal__details').show();
 	$('.withdraw .modal__status').hide();
@@ -57,6 +59,8 @@ $('.modal__btn').filter('.withdraw-now-btn').click(function(){
 });
 
 $('.modal__btn').filter('.send-more-btn').click(function(){
+	$('.send .send-btn').prop('disabled', false);
+	
 	show_form_hold_manually(true);
 	$('#wallet_manually').attr('checked', true);
 	$('#contract_address').html('').append( CONTRACT_ADDRESS );

@@ -1,6 +1,7 @@
 /* ------------ HOLD ------------ */
 $('.promo__btn').filter('.hold').click(function(){
 	$('.modal__radio').show();
+	$('.send .send-btn').prop('disabled', false);
 	
 	$('#contract_address').html('').append( CONTRACT_ADDRESS );
 	$('[name="wallet_type"]').each(function(){
@@ -75,6 +76,7 @@ function hold(wallet_type, check_wallet_type){
 	$('.send .modal__status').show();
 	$('.send .modal__status').removeClass('success');
 	$('.send .modal__status .modal__status-str').html('PENDING: ');
+	$('.send .send-btn').prop('disabled', true);
 		
 	if(wallet_type == WALLETS[1] || check_wallet_type == WALLETS[1]){
 		$('.send .modal__status :nth-child(2)').html(web3.eth.defaultAccount);
@@ -137,8 +139,12 @@ function hold(wallet_type, check_wallet_type){
 
 function after_sendTx_err(err, action){
 	var class_ = "send";
-	if(action == "withdraw")
+	if(action == "withdraw"){
 		class_ = action;
+		$('.withdraw .withdraw-bal-btn-metamask').prop('disabled', false);
+	} else {
+		$('.send .send-btn').prop('disabled', false);
+	}
 
 	$('.'+class_+' .modal__status').hide();
 	$('.'+class_+' .modal__status :nth-child(2)').html('');

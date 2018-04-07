@@ -2,7 +2,8 @@
 $('.promo__btn').filter('.withdraw').click(function(){
 	$('.modal__radio').show();
 	$('#withdraw_address').attr('disabled', false);
-
+	$('.withdraw .withdraw-bal-btn-metamask').prop('disabled', false);
+	
 	$('#withdraw_address').html('').append( CONTRACT_ADDRESS );
 	$('[name="withdraw_wallet_type"]').each(function(){
 		if($(this).attr('checked'))
@@ -100,6 +101,7 @@ function withdraw(wallet_type, check_wallet_type){
 	$('.withdraw .modal__status').show();
 	$('.withdraw .modal__status').removeClass('success');
 	$('.withdraw .modal__status .modal__status-str').html('PENDING: ');
+	$('.withdraw .withdraw-bal-btn-metamask').prop('disabled', true);
 
 	if(wallet_type == WALLETS[1] || check_wallet_type == WALLETS[1]){
 		$('.withdraw .modal__status :nth-child(2)').html(web3.eth.defaultAccount);
