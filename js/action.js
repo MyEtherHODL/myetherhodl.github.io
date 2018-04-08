@@ -186,7 +186,7 @@ function fill_last_and_top_txs_v2(){
 				year_text += "s";
 			var tooltip	= "eth will be transfered</br>in "+term+" "+year_text+" ("+untilTime+")";
 			if(inc_dec == "decrease"){
-				tooltip = "eth was transfered";
+				tooltip = "ETH has been transfered back before the end of the period";
 			}
 			$('.results__latest').append('<div class="results__top-item"><span class="results__top-count '+inc_dec+'" data-tooltip="'+tooltip+'">'+amount+' Eth</span> <span class="addr__link">'+hodler+'</span> <span class="none">'+tx[i].transactionHash+'</span></div>');
 
