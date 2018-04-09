@@ -1021,7 +1021,7 @@ button {
 @media (min-width: 768px) {
   .modal-wrap.send .modal {
     height: auto;
-    max-height: 520px;
+    max-height: 560px;
     padding: 0 40px 0 20px;
   }
   .modal-wrap.send .modal:after {

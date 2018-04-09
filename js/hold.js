@@ -174,5 +174,5 @@ function checkTxResult(txHash, class_){
 			$('.'+class_+' .modal__status').addClass(status);
 			$('.'+class_+' .modal__status .modal__status-str').html(status.toUpperCase()+': ');
 		}
-	}, 500);
+	}, 1000);
 }
