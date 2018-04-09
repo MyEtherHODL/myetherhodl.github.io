@@ -160,8 +160,8 @@
     document.querySelectorAll('.modal__radio.term .modal__radio-label').forEach(function(item, i, arr) {
       item.addEventListener('mouseover', function(e) {
         var d = new Date(),
-            dd = d.getDate() > 10 ? d.getDate() : ('0' + d.getDate()),
-            mm = d.getMonth() + 1 > 10 ? d.getMonth() + 1 : ('0' + (d.getMonth() + 1)),
+            dd = d.getDate() >= 10 ? d.getDate() : ('0' + d.getDate()),
+            mm = d.getMonth() + 1 >= 10 ? d.getMonth() + 1 : ('0' + (d.getMonth() + 1)),
             yyyy = d.getFullYear(),
             text = 'Your eth will be returned in ',
             tooltip = '';

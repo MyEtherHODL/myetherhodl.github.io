@@ -9,14 +9,7 @@ $('.promo__btn').filter('.hold').click(function(){
 			check_type_wallet_hold($(this));
 		}
 	});
-	$('[name="wallet_term"]').each(function(){
-		$(this).parent().css('display', 'block');
-		var year = " year";
-		if($(this).val() > 1)
-			year += "s";
-		$("label[for='"+$(this).attr("id")+"']").html($(this).val()+year);
-	});
-	$('#wallet_one_year').attr('checked', true);
+	
 	fill_manually_data_hold();
 });
 
@@ -48,6 +41,15 @@ function check_type_wallet_hold(wallet_type_el){
 	}
 }
 function show_form_hold_manually(is_manually){
+	$('[name="wallet_term"]').each(function(){
+		$(this).parent().css('display', 'block');
+		var year = " year";
+		if($(this).val() > 1)
+			year += "s";
+		$("label[for='"+$(this).attr("id")+"']").html($(this).val()+year);
+	});
+	$('#wallet_one_year').attr('checked', true);
+	
 	$('.send .modal__status').hide();
 	$('.send .modal__status').removeClass('success');
 	$('.send .modal__status .modal__status-str').html('PENDING: ');

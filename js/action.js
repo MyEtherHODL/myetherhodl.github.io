@@ -330,6 +330,30 @@ function is_mist_ledger(action, address){
 		$('.send .modal__warning').hide();
 		$('.send .modal__account').show();
 		$('#eth_address').html(address);
+		//term
+		var hodler = get_hodler_info(address);
+		$('[name="wallet_term"]').each(function(){
+			if(parseInt($(this).val()) < hodler.term){
+				$(this).parent().css('display', 'none');
+			}
+			if(parseInt($(this).val()) > hodler.term){
+				$(this).parent().css('display', 'block');
+				var year = " year";
+				if($(this).val() > 1)
+					year += "s";
+				$("label[for='"+$(this).attr("id")+"']").html($(this).val()+year);
+			}
+			if(parseInt($(this).val()) == hodler.term){
+				if(parseInt($(this).val()) == 1)
+					$('#wallet_one_year + label').html('Current term');
+				if(parseInt($(this).val()) == 2)
+					$('#wallet_two_year + label').html('Current term');
+				if(parseInt($(this).val()) == 3)
+					$('#wallet_three_year + label').html('Current term');
+				$(this).attr('checked', true);
+				fill_manually_data_hold();
+			}
+		});
 	}
 
 	if(action == "withdraw"){
@@ -351,3 +375,5 @@ function is_mist_ledger(action, address){
 		$('#check_address').val(address);
 	}
 }
+
+console.log(getDateTime(1518264732));
