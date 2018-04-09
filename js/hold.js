@@ -77,10 +77,10 @@ function hold(wallet_type, check_wallet_type){
 	$('.send .modal__status').removeClass('success');
 	$('.send .modal__status .modal__status-str').html('PENDING: ');
 	$('.send .send-btn').prop('disabled', true);
-		
+	$('.send .modal__status :nth-child(2)').html("Transaction confirm required");
+	
 	if(wallet_type == WALLETS[1] || check_wallet_type == WALLETS[1]){
-		$('.send .modal__status :nth-child(2)').html(web3.eth.defaultAccount);
-		web3.eth.sendTransaction({ 'from':web3.eth.defaultAccount, 'to': CONTRACT_ADDRESS, 'data': get_kessak256_data(TERMS[$('[name="wallet_term"]:checked').attr('id')]), 'value': $('#eth_amount').val()*Math.pow(10, 18) /*, gas:85000*/}, function(err, txHash){
+		web3.eth.sendTransaction({ 'from':$('#eth_address').html(), 'to': CONTRACT_ADDRESS, 'data': get_kessak256_data(TERMS[$('[name="wallet_term"]:checked').attr('id')]), 'value': $('#eth_amount').val()*Math.pow(10, 18) /*, gas:85000*/}, function(err, txHash){
 			if(err){
 				after_sendTx_err(err, 'hold');
 			} else {
@@ -91,7 +91,6 @@ function hold(wallet_type, check_wallet_type){
 
 	if(wallet_type == WALLETS[0] || check_wallet_type == WALLETS[0]){
 		eth_ledger.getAddress_async("44'/60'/0'/0").then(function(result) {
-			$('.send .modal__status :nth-child(2)').html(result.address);
 			var tx_data = '0x'+get_kessak256_data(TERMS[$('[name="wallet_term"]:checked').attr('id')]);
 			
 			$.getJSON("https://gasprice.poa.network", function(data) {
@@ -155,12 +154,25 @@ function after_sendTx_success(txHash, action){
 	if(action == "withdraw")
 		class_ = action;
 
-	$('.'+class_+' .modal__status').addClass('success');
-	$('.'+class_+' .modal__status .modal__status-str').html('SUCCESS: ');
 	$('.'+class_+' .modal__status :nth-child(2)').html('<span id="'+action+'_txHash" class="addr__link">'+txHash+'</span>');
 	$('#'+action+'_txHash').on('click', function(){
 		window.open("https://"+ROPSTEN+"etherscan.io/tx/"+$(this).html(), '_blank');
 	});
+	checkTxResult(txHash, class_);
 }
 
-
+function checkTxResult(txHash, class_){
+	var checkTxInterval = setInterval(function(){
+		var txInfo;
+		if((txInfo = web3_local.eth.getTransactionReceipt(txHash)) != null){
+			clearInterval(checkTxInterval);
+			var status = 'success';
+			if(txInfo.status == 0)
+				status = 'fail';
+			if(txInfo.status == 1)
+				status = 'success';
+			$('.'+class_+' .modal__status').addClass(status);
+			$('.'+class_+' .modal__status .modal__status-str').html(status.toUpperCase()+': ');
+		}
+	}, 500);
+}

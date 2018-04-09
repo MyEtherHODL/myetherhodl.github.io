@@ -1021,7 +1021,7 @@ button {
 @media (min-width: 768px) {
   .modal-wrap.send .modal {
     height: auto;
-    max-height: 500px;
+    max-height: 520px;
     padding: 0 40px 0 20px;
   }
   .modal-wrap.send .modal:after {
@@ -1679,6 +1679,10 @@ button {
 .modal__status.success {
   color: #16E081;
 }
+.modal__status.fail {
+  color: #E31030;
+}
+
 .modal__field-text {
   position: relative;
   padding-top: 8px;

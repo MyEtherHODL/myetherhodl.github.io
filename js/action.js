@@ -329,6 +329,7 @@ function is_mist_ledger(action, address){
 	if(action == "hold"){
 		$('.send .modal__warning').hide();
 		$('.send .modal__account').show();
+		$('#eth_address').html(address);
 	}
 
 	if(action == "withdraw"){
