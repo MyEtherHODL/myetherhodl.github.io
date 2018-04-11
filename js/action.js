@@ -52,7 +52,7 @@ function add_link_url_to_ticker() {
 }
 
 $('#contract_source').click(function(){
-	window.open("https://etherscan.io/address/0xcc277a6925fdc13b6441c0bc40633f481b0a5de4#code", '_blank');
+	window.open("https://"+ROPSTEN+"etherscan.io/address/"+CONTRACT_ADDRESS+"#code", '_blank');
 });
 
 function get_hodler_info(address){
