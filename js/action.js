@@ -30,6 +30,23 @@ const TERMS = {'wallet_one_year': 'hodlFor1y()', 'wallet_two_year': 'hodlFor2y()
 const COUNT_LATEST_HOLDERS = 6;
 const COUNT_TOP_HOLDERS = 5;
 
+var temp_ticker__link = 0;
+var interval_ticker__link = setInterval(function(){
+	if(temp_ticker__link == 0){
+	  $('.ticker__link').html('&#9756; eth');  
+	  temp_ticker__link = 1;
+	} else if(temp_ticker__link == 1) {
+	  $('.ticker__link').html('&#9757; eth');  
+	  temp_ticker__link = 2;
+	} else if(temp_ticker__link == 2) {
+	  $('.ticker__link').html('&#9758; eth');  
+	  temp_ticker__link = 3;
+	} else if(temp_ticker__link == 3) {
+	  $('.ticker__link').html('&#9759; eth');  
+	  temp_ticker__link = 0;
+	}
+}, 500);
+
 var web3_local = new Web3(new Web3.providers.HttpProvider(INFURA_URL));
 if(!web3_local.net.listening){
 	alert('Provider infura.io is not available');
@@ -210,6 +227,7 @@ function fill_last_and_top_txs_v2(){
 		var biggest_hodler_week_balance = biggest_hodler_week.args.amount.toNumber() / Math.pow(10,18);
 		var biggest_hodler_week_address = biggest_hodler_week.args.hodler;
 		var biggest_hodler_week_tx = biggest_hodler_week.transactionHash;
+		clearInterval(interval_ticker__link);
 		$('.ticker__link').html('').append(biggest_hodler_week_balance + " eth");
 		$('#ticker_address').html('').append(biggest_hodler_week_address);
 		$('#ticker_tx').html('').append(biggest_hodler_week_tx);
