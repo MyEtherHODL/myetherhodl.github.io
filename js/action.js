@@ -278,8 +278,14 @@ function getDateTime(timestamp) {
 var check_mist_timeout;
 var check_ledger_timeout;
 var eth_ledger;
+var web3;
 function check_mist_ledger(action, type){
 	if(type == "mist"){
+		if(web3 == undefined){
+			not_mist_ledger(action, type);
+			return;
+		}
+		
 		if(!web3.currentProvider.isMetaMask || web3.eth.defaultAccount == undefined){
 			not_mist_ledger(action, type);
 		} else {
@@ -393,5 +399,3 @@ function is_mist_ledger(action, address){
 		$('#check_address').val(address);
 	}
 }
-
-console.log(getDateTime(1518264732));
